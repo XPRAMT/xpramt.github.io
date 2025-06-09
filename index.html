@@ -1,7 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人網站</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> </head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+    <header class="site-header">
+        <div class="header-container">
+            <h1 class="site-title">我的作品集</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#projects" class="nav-tab active" data-tab="projects">專案介紹</a></li>
+                    <li><a href="#articles" class="nav-tab" data-tab="articles">技術文章</a></li>
+                    <li><a href="#about" class="nav-tab" data-tab="about">關於我</a></li>
+                </ul>
+            </nav>
+            <button id="theme-switcher" class="theme-switcher" aria-label="切換色彩主題">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <section id="projects" class="content-section active">
+            <h2><i class="fas fa-project-diagram"></i> 專案介紹</h2>
+            <div class="project-grid">
+                <div class="card project-card">
+                    <h3>聲道映射工具 (Audio Channel Mapping)</h3>
+                    <p>一個使用 Python 和 PyQt6 開發的桌面應用程式，專為音訊工程師和影片剪輯師設計，提供直觀的介面來重新對應、複製或混合多聲道音訊檔案的聲道，支援多種音訊格式。</p>
+                    <div class="project-links">
+                        <a href="https://github.com/XPRAMT/audio-channel-mapping" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> 查看 GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>MoeFusion</h3>
+                    <p>一個基於 Python 的圖像處理專案。此專案可能專注於圖像風格轉換、超解析度或圖像生成等領域，旨在探索和實現先進的電腦視覺技術。</p>
+                     <div class="project-links">
+                        <a href="https://github.com/XPRAMT/MoeFusion" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> 查看 GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles" class="content-section">
+            <h2><i class="fas fa-feather-alt"></i> 技術文章</h2>
+            <div class="article-list">
+                <article class="card article-card">
+                    <h3 class="article-title">PyQt6 中多執行緒避免 GUI 卡死的最佳實踐</h3>
+                    <p class="article-summary">在開發桌面應用時，任何耗時的操作都應該放在獨立的執行緒中，以防止主 UI 執行緒被阻塞。本文將探討如何在 PyQt6 中使用 QThread 來處理背景任務，並與 qfluentwidgets 完美結合...</p>
+                    <div class="article-meta">
+                        <span class="tag">PyQt6</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">GUI</span>
+                    </div>
+                </article>
+                <article class="card article-card">
+                    <h3 class="article-title">Android Kotlin 協程 (Coroutines) 入門</h3>
+                    <p class="article-summary">Kotlin 協程是現代 Android 開發中處理非同步程式設計的利器。它簡化了回呼地獄，讓非同步程式碼像同步程式碼一樣易於閱讀和維護。本文將從基本概念講起...</p>
+                    <div class="article-meta">
+                        <span class="tag">Android</span>
+                        <span class="tag">Kotlin</span>
+                    </div>
+                </article>
+                 <article class="card article-card">
+                    <h3 class="article-title">處理中文路徑：Python 程式的常見陷阱與解決方案</h3>
+                    <p class="article-summary">在 Windows 環境下，Python 程式讀寫包含非 ASCII 字元（如中文）的路徑時，常常會遇到編碼錯誤。本文將深入分析問題根源，並提供在不同情境下的可靠解決方案。</p>
+                    <div class="article-meta">
+                        <span class="tag">Python</span>
+                        <span class="tag">檔案處理</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <h2><i class="fas fa-user-circle"></i> 關於我</h2>
+            <div class="card about-card">
+                <p>你好，我是一位對技術充滿熱情的開發者。</p>
+                <p>我的主要研究領域集中在<strong>圖像、影片及聲音處理</strong>，並致力於將這些技術應用於PC和Android平台。</p>
+                <ul>
+                    <li>🖥️ <strong>PC 開發:</strong> 我熟悉使用 Python、PyQt6 及 PyQt-Fluent-Widgets 來打造美觀且功能強大的桌面應用程式。</li>
+                    <li>📱 <strong>Android 開發:</strong> 我使用 Kotlin 進行原生 Android 應用程式的開發。</li>
+                </ul>
+                <p>我注重程式碼的品質與使用者體驗，特別是在 GUI 設計方面，我堅持：</p>
+                <ul>
+                    <li>確保應用程式能處理包含中文的檔案路徑。</li>
+                    <li>精細管理按鈕等 UI 元件的狀態，提升互動的直覺性。</li>
+                    <li>透過多執行緒處理耗時任務，確保 GUI 的流暢性。</li>
+                </ul>
+                <p>歡迎透過 GitHub 查看我的專案，或在技術文章區與我交流！</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
