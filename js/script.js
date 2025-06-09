@@ -57,4 +57,30 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('theme', 'dark'); // 儲存偏好
         }
     });
+
+    // --- 圖片庫展開功能 ---
+    const galleryButtons = document.querySelectorAll('.expand-gallery-btn');
+
+    galleryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const gallery = button.previousElementSibling;
+            const hiddenImages = gallery.querySelectorAll('.hidden-image');
+            
+            hiddenImages.forEach(image => {
+                // 切換圖片的顯示狀態
+                if (image.style.display === 'none' || image.style.display === '') {
+                    image.style.display = 'block';
+                } else {
+                    image.style.display = 'none';
+                }
+            });
+
+            // 更新按鈕文字
+            if (button.textContent.includes('顯示更多')) {
+                button.textContent = '收合圖片';
+            } else {
+                button.textContent = '顯示更多';
+            }
+        });
+    });
 });
