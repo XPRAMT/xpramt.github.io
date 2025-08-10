@@ -267,6 +267,8 @@
 
     const workers = Array(CONCURRENCY).fill(0).map(worker);
     await Promise.all(workers);
+    // 讓瀏覽器有機會把「100%」畫出來
+    await new Promise(requestAnimationFrame);
 
     // ===== 確保 mux.js 可用 =====
     onStatus('載入/檢查 mux.js… (transmux library)');
@@ -288,6 +290,9 @@
     // ===== TS → MP4 (transmux) =====
     onStatus('轉封裝為 MP4… (transmux to MP4)');
     reportProgress({ phase: 'transmux', percent: 0 });
+    // 讓「合併中...」先出現在畫面上
+    await new Promise(requestAnimationFrame);
+
 
     const transmuxer = new TransmuxerClass({ keepOriginalTimestamps: true });
     const mp4Parts = [];
