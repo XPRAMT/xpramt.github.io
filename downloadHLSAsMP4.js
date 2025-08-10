@@ -23,7 +23,8 @@
  */
 (function () {
   'use strict';
-
+  // ===== 版本（Version） =====
+  const DWHLS_VERSION = '1.1.0';
   // ===================== 型別註解（JSDoc） =====================
   /**
    * @typedef {Object} ProgressPayload
@@ -173,8 +174,6 @@
     return function report(patch) {
       const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 ,msg: 'None'}, last, patch);
       p.msg = buildMsg(p);
-      // p.msg 顯示在控制台（避免洗版：僅在訊息改變時輸出）
-      try { if (!last.msg || p.msg !== last.msg) console.log('[downloadHLSAsMP4]', p.msg); } catch (_) {}
       last = p;
       if (typeof onProgress === 'function') onProgress(p);
     };
@@ -302,7 +301,14 @@
     report({ phase: 'done', percent: 100, msg: '完成！' });
   }
 
-  // 導出到全域
-  if (typeof window !== 'undefined') window.downloadHLSAsMP4 = downloadHLSAsMP4;
-  else if (typeof self !== 'undefined') self.downloadHLSAsMP4 = downloadHLSAsMP4;
+  // 導出到全域 + 版本號
+  if (typeof window !== 'undefined') {
+    window.downloadHLSAsMP4 = downloadHLSAsMP4;
+    window.downloadHLSAsMP4Version = DWHLS_VERSION;
+  } else if (typeof self !== 'undefined') {
+    self.downloadHLSAsMP4 = downloadHLSAsMP4;
+    self.downloadHLSAsMP4Version = DWHLS_VERSION;
+  }
+  try { downloadHLSAsMP4.version = DWHLS_VERSION; } catch (_) {}
+  
 })();
