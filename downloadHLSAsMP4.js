@@ -23,358 +23,255 @@
    * @param {string[]} [options.muxCdnCandidates]  自動載入 mux.js 的 CDN 候選
    * @returns {Promise<{blob: Blob, fileName: string, save: ()=>void}>}
    */
-  async function downloadHLSAsMP4(options) {
+// ===================== 小工具 =====================
+  const hasGM = typeof GM_xmlhttpRequest === 'function';
+
+  function gmFetchText(url, headers = {}) {
+    if (!hasGM) return fetch(url, { headers }).then(r => r.text());
+    return new Promise((resolve, reject) => {
+      GM_xmlhttpRequest({ method: 'GET', url, headers, responseType: 'text', onload: r => resolve(r.responseText), onerror: reject, ontimeout: reject });
+    });
+  }
+  function gmFetchArrayBuffer(url, headers = {}) {
+    if (!hasGM) return fetch(url, { headers }).then(r => r.arrayBuffer());
+    return new Promise((resolve, reject) => {
+      GM_xmlhttpRequest({ method: 'GET', url, headers, responseType: 'arraybuffer', onload: r => resolve(r.response), onerror: reject, ontimeout: reject });
+    });
+  }
+
+  async function ensureMuxJS() {
+    if (typeof muxjs !== 'undefined' || (typeof self !== 'undefined' && typeof self.muxjs !== 'undefined')) return;
+    const candidates = [
+      'https://cdn.jsdelivr.net/npm/mux.js@6.3.0/dist/mux.min.js',
+      'https://unpkg.com/mux.js@6.3.0/dist/mux.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/mux.js/6.3.0/mux.min.js'
+    ];
+    let lastErr = null;
+    for (const u of candidates) {
+      try {
+        const code = await gmFetchText(u);
+        (new Function(code))();
+        if (typeof muxjs !== 'undefined' || (typeof self !== 'undefined' && typeof self.muxjs !== 'undefined')) return;
+      } catch (e) { lastErr = e; }
+    }
+    throw new Error('mux.js 載入失敗' + (lastErr ? `：${lastErr}` : ''));
+  }
+
+  function formatMB(n) {
+    if (!Number.isFinite(n)) return 0;
+    return Math.floor(n / 1048576);
+  }
+
+  function toAbs(u, base) { return new URL(u, base).href; }
+
+  function parseMediaM3U8(text, base) {
+    const lines = String(text).trim().split(/\r?\n/);
+    const segments = [];
+    let seq = 0, keyInfo = null, hasFMP4 = false;
+    for (let i = 0; i < lines.length; i++) {
+      const l = lines[i].trim();
+      if (!l) continue;
+      if (l.startsWith('#EXT-X-MAP') && l.includes('URI=')) {
+        hasFMP4 = true; // fMP4 流（.m4s），此流程不處理
+      } else if (l.startsWith('#EXT-X-MEDIA-SEQUENCE')) {
+        seq = parseInt(l.split(':')[1], 10) || 0;
+      } else if (l.startsWith('#EXT-X-KEY')) {
+        const raw = l.slice(l.indexOf(':') + 1);
+        const attrs = {};
+        raw.split(',').forEach(kv => {
+          const [k, v] = kv.split('=');
+          attrs[k.trim()] = v ? v.trim().replace(/^"|"$/g, '') : '';
+        });
+        keyInfo = { method: attrs.METHOD, uri: attrs.URI ? toAbs(attrs.URI, base) : null, iv: attrs.IV || null };
+      } else if (!l.startsWith('#')) {
+        const url = toAbs(l, base);
+        segments.push({ url, sn: seq++ });
+      }
+    }
+    return { segments, keyInfo, hasFMP4 };
+  }
+
+  function ivFromHex(ivStr) {
+    const hex = ivStr.startsWith('0x') ? ivStr.slice(2) : ivStr;
+    const out = new Uint8Array(16);
+    for (let i = 0; i < 16; i++) out[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    return out;
+  }
+  function ivFromSeq(sn) {
+    const iv = new Uint8Array(16);
+    const dv = new DataView(iv.buffer);
+    dv.setUint32(12, sn >>> 0);
+    return iv;
+  }
+  async function aes128cbcDecrypt(keyBytes, ivBytes, cipherBytes) {
+    const key = await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-CBC' }, false, ['decrypt']);
+    const plain = await crypto.subtle.decrypt({ name: 'AES-CBC', iv: ivBytes }, key, cipherBytes);
+    return new Uint8Array(plain);
+  }
+
+  async function yieldToUI() {
+    await new Promise(requestAnimationFrame);
+    await new Promise(r => setTimeout(r, 0));
+  }
+
+  // ===================== 訊息產生（集中於本檔） =====================
+  function buildMsg(p) {
+    const pct = (v) => (typeof v === 'number' ? `(${Math.max(0, Math.min(100, Math.round(v)))}%)` : '');
+    switch (p.phase) {
+      case 'prepare':
+        return '準備中...';
+      case 'master':
+        return '解析清單...';
+      case 'downloading': {
+        const hasSeg = Number.isFinite(p.done) && Number.isFinite(p.total);
+        const hasBytes = Number.isFinite(p.bytesDownloaded);
+        const hasTotalBytes = Number.isFinite(p.totalBytes);
+        let msg = '下載中';
+        if (hasBytes && hasTotalBytes) msg += ` ${formatMB(p.bytesDownloaded)}/${formatMB(p.totalBytes)}MB`;
+        else if (hasBytes) msg += ` ${formatMB(p.bytesDownloaded)}MB`;
+        if (hasSeg) msg += ` ${p.done}/${p.total}`;
+        if (typeof p.percent === 'number') msg += ` ${pct(p.percent)}`;
+        return msg;
+      }
+      case 'transmux':
+      case 'finalize':
+        return '合併中...';
+      case 'done':
+        return '完成！';
+      default:
+        return p.status || '處理中...';
+    }
+  }
+
+  function makeReporter(onProgress) {
+    let last = {};
+    return function report(patch) {
+      const p = Object.assign({}, last, patch);
+      if (!p.msg) p.msg = buildMsg(p);
+      last = p;
+      if (typeof onProgress === 'function') onProgress(p);
+    };
+  }
+
+  // ===================== 主函式 =====================
+  async function downloadHLSAsMP4(opts) {
     const {
       m3u8Url,
       fileName = 'video.mp4',
-      autoDownload = true,
-      concurrency = 8,
-      onProgress = () => {},
-      onStatus = () => {},
+      headers = {},
       signal,
-      muxCdnCandidates = [
-        'https://cdn.jsdelivr.net/npm/mux.js@6.3.0/dist/mux.min.js',
-        'https://unpkg.com/mux.js@6.3.0/dist/mux.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/mux.js/6.3.0/mux.min.js'
-      ]
-    } = options || {};
+      onProgress
+      // onStatus 不再必須，若外部仍傳入也不會破壞相容性
+    } = opts || {};
 
-    if (!m3u8Url) throw new Error('缺少 m3u8Url');
+    if (!m3u8Url) throw new Error('m3u8Url 必填');
 
-    // header 拼字相容
-    const headers = Object.assign({}, options?.headers || {}, options?.hearder || {});
+    const report = makeReporter(onProgress);
 
-    // ===== 基礎工具 =====
-    const gmAvailable = typeof GM_xmlhttpRequest === 'function';
+    // ---- 準備 ----
+    report({ phase: 'prepare', percent: 0 });
 
-    const gmLikeFetchText = (url) => requestWithFallback(url, 'text');
-    const gmLikeFetchArrayBuffer = (url) => requestWithFallback(url, 'arraybuffer');
+    const m3u8Text = await gmFetchText(m3u8Url, headers);
+    report({ phase: 'master' });
 
-    function requestWithFallback(url, type) {
-      if (signal?.aborted) return Promise.reject(new Error('已中止'));
-      if (gmAvailable) {
-        return new Promise((resolve, reject) => {
-          GM_xmlhttpRequest({
-            method: 'GET',
-            url,
-            headers,
-            responseType: type,
-            onload: res => {
-              if (type === 'text') resolve(res.responseText);
-              else resolve(res.response);
-            },
-            onerror: err => reject(new Error(`請求失敗：${url}`)),
-            ontimeout: () => reject(new Error(`請求逾時：${url}`))
-          });
-        });
-      } else {
-        // 原生 fetch（受 CORS 限制，且無法自訂 Referer/Origin）
-        const controller = new AbortController();
-        if (signal) {
-          if (signal.aborted) throw new Error('已中止');
-          signal.addEventListener('abort', () => controller.abort(), { once: true });
-        }
-        return fetch(url, { method: 'GET', headers, mode: 'cors', signal: controller.signal })
-          .then(res => {
-            if (!res.ok) throw new Error(`HTTP ${res.status} @ ${url}`);
-            if (type === 'text') return res.text();
-            return res.arrayBuffer();
-          });
-      }
-    }
+    const { segments, keyInfo, hasFMP4 } = parseMediaM3U8(m3u8Text, m3u8Url);
+    if (hasFMP4) throw new Error('偵測到 fMP4（.m4s）切片，目前僅支援 TS。');
+    if (!segments.length) throw new Error('解析不到任何切片。');
 
-    function toAbs(u, base) {
-      try { return new URL(u, base).href; } catch { return u; }
-    }
-
-    // ===== 解析 Master / Media m3u8 =====
-    function parseMasterM3U8(text, base) {
-      // 解析 #EXT-X-STREAM-INF：挑最高畫質
-      const lines = text.trim().split(/\r?\n/);
-      const variants = [];
-      for (let i = 0; i < lines.length; i++) {
-        const l = lines[i].trim();
-        if (l.startsWith('#EXT-X-STREAM-INF')) {
-          const attrs = parseAttributeList(l.split(':')[1] || '');
-          const uri = toAbs(lines[i + 1]?.trim(), base);
-          const res = parseResolution(attrs.RESOLUTION);
-          const bw = parseInt(attrs.BANDWIDTH || '0', 10) || 0;
-          variants.push({ uri, resolution: res, bandwidth: bw, raw: attrs });
-        }
-      }
-      return variants;
-    }
-
-    function parseResolution(resStr) {
-      if (!resStr) return { width: 0, height: 0 };
-      const m = String(resStr).match(/(\d+)\s*x\s*(\d+)/i);
-      return m ? { width: +m[1], height: +m[2] } : { width: 0, height: 0 };
-    }
-
-    function parseAttributeList(s) {
-      const out = {};
-      (s || '').split(',').forEach(kv => {
-        const [k, v] = kv.split('=');
-        if (!k) return;
-        out[k.trim()] = v ? v.trim().replace(/^"|"$/g, '') : '';
-      });
-      return out;
-    }
-
-    function parseMediaM3U8(text, base) {
-      const lines = text.trim().split(/\r?\n/);
-      const segments = [];
-      let seq = 0, keyInfo = null, hasFMP4 = false;
-
-      for (let i = 0; i < lines.length; i++) {
-        const l = lines[i].trim();
-        if (!l) continue;
-
-        if (l.startsWith('#EXT-X-MAP') && l.includes('URI=')) {
-          // 有 MAP 代表多半是 fMP4
-          hasFMP4 = true;
-        } else if (l.startsWith('#EXT-X-MEDIA-SEQUENCE')) {
-          seq = parseInt(l.split(':')[1], 10) || 0;
-        } else if (l.startsWith('#EXT-X-KEY')) {
-          const raw = l.slice(l.indexOf(':') + 1);
-          const attrs = parseAttributeList(raw);
-          keyInfo = {
-            method: attrs.METHOD,
-            uri: attrs.URI ? toAbs(attrs.URI, base) : null,
-            iv: attrs.IV || null
-          };
-        } else if (!l.startsWith('#')) {
-          const url = toAbs(l, base);
-          segments.push({ url, sn: seq++ });
-        }
-      }
-      return { segments, keyInfo, hasFMP4 };
-    }
-
-    function ivFromHex(ivStr) {
-      const hex = ivStr.startsWith('0x') ? ivStr.slice(2) : ivStr;
-      const out = new Uint8Array(16);
-      for (let i = 0; i < 16; i++) out[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
-      return out;
-    }
-    function ivFromSeq(sn) {
-      const iv = new Uint8Array(16);
-      const dv = new DataView(iv.buffer);
-      dv.setUint32(12, sn >>> 0);
-      return iv;
-    }
-    async function aes128cbcDecrypt(keyBytes, ivBytes, cipherBytes) {
-      const key = await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-CBC' }, false, ['decrypt']);
-      const plain = await crypto.subtle.decrypt({ name: 'AES-CBC', iv: ivBytes }, key, cipherBytes);
-      return new Uint8Array(plain);
-    }
-
-    // ===== 進度/狀態 =====
-    function reportProgress(patch) {
-      // phase: 'prepare' | 'master' | 'downloading' | 'transmux' | 'finalize'
-      // percent: 0~100
-      onProgress(Object.assign({
-        phase: 'prepare',
-        done: 0, total: 0, percent: 0,
-        bytesDownloaded: 0, lastBytes: 0
-      }, patch));
-    }
-
-    const t0 = Date.now();
-    onStatus('初始化… (initialize)');
-
-    // ===== 讀取 m3u8（若是 master 會自動選最高畫質）=====
-    let mediaUrl = m3u8Url;
-    const masterText = await gmLikeFetchText(m3u8Url);
-    if (/EXT-X-STREAM-INF/.test(masterText)) {
-      reportProgress({ phase: 'master', percent: 0 });
-      onStatus('偵測到 Master m3u8，挑選最高畫質… (master playlist)');
-
-      const variants = parseMasterM3U8(masterText, m3u8Url);
-      if (!variants.length) throw new Error('Master m3u8 解析失敗，未找到變體串流 (variants)');
-
-      // 以解析度高度優先，其次以頻寬
-      variants.sort((a, b) => {
-        const dh = (b.resolution?.height || 0) - (a.resolution?.height || 0);
-        if (dh !== 0) return dh;
-        return (b.bandwidth || 0) - (a.bandwidth || 0);
-      });
-      mediaUrl = variants[0].uri;
-    }
-
-    // ===== 讀取 Media m3u8 =====
-    onStatus('讀取媒體播放清單… (media playlist)');
-    const mediaText = (mediaUrl === m3u8Url && /#EXTINF:/.test(masterText))
-      ? masterText
-      : await gmLikeFetchText(mediaUrl);
-
-    const { segments, keyInfo, hasFMP4 } = parseMediaM3U8(mediaText, mediaUrl);
-    if (hasFMP4) throw new Error('偵測到 fMP4（.m4s）切片，當前流程僅支援 TS。');
-    if (!segments.length) throw new Error('解析不到任何切片 (segments)。');
-
-    // ===== 取金鑰（若為 AES-128）=====
+    // ---- 金鑰 ----
     let keyBytes = null, useAES = false;
     if (keyInfo && keyInfo.method === 'AES-128' && keyInfo.uri) {
-      onStatus('取得 AES-128 金鑰… (encryption key)');
-      const keyBuf = await gmLikeFetchArrayBuffer(keyInfo.uri);
+      const keyBuf = await gmFetchArrayBuffer(keyInfo.uri, headers);
       keyBytes = new Uint8Array(keyBuf);
       useAES = true;
     } else if (keyInfo && keyInfo.method && keyInfo.method !== 'NONE') {
-      throw new Error('遇到非 AES-128 的加密（如 SAMPLE-AES/DRM），無法處理。');
+      throw new Error('遇到非 AES-128 的加密（例如 SAMPLE-AES/DRM），純 JS 無法處理。');
     }
 
-    // ===== 下載切片（並行）=====
-    onStatus('開始下載切片… (download segments)');
-    reportProgress({ phase: 'downloading', done: 0, total: segments.length, percent: 0 });
-
+    // ---- 下載 ----
     const total = segments.length;
     const outTS = new Array(total);
-    let done = 0;
-    let bytesDownloaded = 0;
+    let done = 0, bytesDownloaded = 0;
+    let aborted = false; if (signal) signal.addEventListener('abort', () => { aborted = true; });
 
+    report({ phase: 'downloading', done, total, percent: 0, bytesDownloaded });
+
+    const CONCURRENCY = 8;
     let cursor = 0;
-    const CONCURRENCY = Math.max(1, Number(concurrency) || 8);
-
     async function worker() {
       while (true) {
-        if (signal?.aborted) throw new Error('已中止');
         const i = cursor++;
         if (i >= total) break;
-
+        if (aborted) throw new DOMException('Aborted', 'AbortError');
         const seg = segments[i];
-        const enc = new Uint8Array(await gmLikeFetchArrayBuffer(seg.url));
+        const enc = new Uint8Array(await gmFetchArrayBuffer(seg.url, headers));
         let plain = enc;
-
         if (useAES) {
           const iv = keyInfo.iv ? ivFromHex(keyInfo.iv) : ivFromSeq(seg.sn);
           plain = await aes128cbcDecrypt(keyBytes, iv, enc);
         }
-
         outTS[i] = plain;
         done++;
         bytesDownloaded += plain.byteLength;
-
-        reportProgress({
-          phase: 'downloading',
-          done,
-          total,
-          percent: Math.round(done / total * 100),
-          bytesDownloaded,
-          lastBytes: plain.byteLength
-        });
+        const percent = Math.round((done / total) * 100);
+        if (done % 2 === 0 || percent >= 99) { // 控制更新頻率
+          report({ phase: 'downloading', done, total, percent, bytesDownloaded });
+          await yieldToUI();
+        }
       }
     }
+    await Promise.all(Array(CONCURRENCY).fill(0).map(worker));
 
-    const workers = Array(CONCURRENCY).fill(0).map(worker);
-    await Promise.all(workers);
-    // 讓瀏覽器有機會把「100%」畫出來
-    await new Promise(requestAnimationFrame);
+    // 讓「100%」能先畫出來
+    await yieldToUI();
 
-    // ===== 確保 mux.js 可用 =====
-    onStatus('載入/檢查 mux.js… (transmux library)');
-    await ensureMuxJS(muxCdnCandidates);
+    // ---- 轉封裝 ----
+    report({ phase: 'transmux', percent: 0 }); // 這裡會使呼叫端顯示「合併中...」
+    await yieldToUI();
 
-    const MUX = (typeof muxjs !== 'undefined') ? muxjs
-              : (typeof global !== 'undefined' && global.muxjs ? global.muxjs : null);
-
+    await ensureMuxJS();
+    const MUX = (typeof muxjs !== 'undefined') ? muxjs : (typeof self !== 'undefined' ? self.muxjs : null);
     const TransmuxerClass =
       (MUX && MUX.Transmuxer) ||
       (MUX && MUX.mp4 && MUX.mp4.Transmuxer) ||
       (MUX && MUX.flv && MUX.flv.Transmuxer) ||
       (MUX && MUX.partial && MUX.partial.Transmuxer);
-
-    if (!MUX || !TransmuxerClass) {
-      throw new Error('mux.js 已載入，但未找到 Transmuxer 類別。');
-    }
-
-    // ===== TS → MP4 (transmux) =====
-    onStatus('轉封裝為 MP4… (transmux to MP4)');
-    reportProgress({ phase: 'transmux', percent: 0 });
-    // 讓「合併中...」先出現在畫面上
-    await new Promise(requestAnimationFrame);
-
+    if (!MUX || !TransmuxerClass) throw new Error('mux.js 已載入，但未找到 Transmuxer 類別。');
 
     const transmuxer = new TransmuxerClass({ keepOriginalTimestamps: true });
     const mp4Parts = [];
-
     transmuxer.on('data', (segment) => {
       if (segment.initSegment) mp4Parts.push(segment.initSegment);
       if (segment.data) mp4Parts.push(segment.data);
     });
 
-    await new Promise(resolve => {
-      transmuxer.on('done', resolve);
-      for (const ts of outTS) transmuxer.push(ts);
-      transmuxer.flush();
-    });
+    // 簡易轉封裝進度（依筆數估計）：最多 50 次更新
+    const batch = Math.max(1, Math.ceil(total / 50));
+    for (let i = 0; i < outTS.length; i++) {
+      transmuxer.push(outTS[i]);
+      if ((i + 1) % batch === 0 || i === outTS.length - 1) {
+        const percent = Math.round(((i + 1) / outTS.length) * 100);
+        report({ phase: 'transmux', percent });
+        await yieldToUI();
+      }
+    }
+    transmuxer.flush();
 
-    reportProgress({ phase: 'finalize', percent: 100 });
-    onStatus(`完成，耗時 ${(Date.now() - t0) / 1000 | 0}s。`);
+    report({ phase: 'finalize' }); // 呼叫端仍會顯示「合併中...」
+    await yieldToUI();
 
     const blob = new Blob(mp4Parts, { type: 'video/mp4' });
-    const safeName = ensureMP4Name(fileName);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fileName.endsWith('.mp4') ? fileName : `${fileName}.mp4`;
+    a.click();
+    URL.revokeObjectURL(a.href);
 
-    function save() {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = safeName;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    }
-
-    if (autoDownload) save();
-
-    return { blob, fileName: safeName, save };
+    report({ phase: 'done', percent: 100, msg: '完成！' });
   }
 
-  // ===== 輔助：安全檔名與 mux.js 載入 =====
-  function ensureMP4Name(name) {
-    const n = name || 'video.mp4';
-    const fullwidthMap = {
-      '<':'＜','>':'＞',':':'：','"':'＂','/':'／','\\':'＼','|':'｜','?':'？','!':'！','*':'＊'
-    };
-    const base = n.replace(/[\/\\<>:"*|?!]/g, ch => fullwidthMap[ch] || '_');
-    return base.toLowerCase().endsWith('.mp4') ? base : (base + '.mp4');
-  }
+  // 導出到全域（Userscript 以 @require 載入後可直接呼叫）
+  if (typeof window !== 'undefined') window.downloadHLSAsMP4 = downloadHLSAsMP4;
+  else if (typeof self !== 'undefined') self.downloadHLSAsMP4 = downloadHLSAsMP4;
 
-  function ensureMuxLoaded() {
-    return (typeof muxjs !== 'undefined') ||
-           (typeof self !== 'undefined' && typeof self.muxjs !== 'undefined');
-  }
-
-  function ensureMuxJS(candidates) {
-    if (ensureMuxLoaded()) return Promise.resolve();
-    return new Promise((resolve, reject) => {
-      let idx = 0;
-      const tryNext = () => {
-        if (idx >= candidates.length) {
-          reject(new Error('mux.js 載入失敗（所有 CDN 候選皆無法載入）'));
-          return;
-        }
-        const src = candidates[idx++];
-        const s = document.createElement('script');
-        s.src = src;
-        s.async = true;
-        s.crossOrigin = 'anonymous';
-        s.onload = () => (ensureMuxLoaded() ? resolve() : tryNext());
-        s.onerror = () => tryNext();
-        document.head.appendChild(s);
-      };
-      tryNext();
-    });
-  }
-
-  // 匯出到全域（UMD 風格的一半；瀏覽器情境）
-  global.downloadHLSAsMP4 = downloadHLSAsMP4;
-
-})(typeof window !== 'undefined' ? window : (typeof self !== 'undefined' ? self : this));
-
-/**
- * @typedef {Object} Progress
- * @property {'prepare'|'master'|'downloading'|'transmux'|'finalize'} phase - 階段（phase）
- * @property {number} done - 已完成段數
- * @property {number} total - 總段數
- * @property {number} percent - 百分比（四捨五入到整數）
- * @property {number} bytesDownloaded - 已下載位元組
- * @property {number} lastBytes - 最新完成的段落位元組
- */
+})();
