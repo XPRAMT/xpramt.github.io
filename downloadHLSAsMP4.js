@@ -24,7 +24,7 @@
 (function () {
   'use strict';
   // ===== 版本（Version） =====
-  const DWHLS_VERSION = '1.1.0';
+  const DWHLS_VERSION = '1.1';
   // ===================== 型別註解（JSDoc） =====================
   /**
    * @typedef {Object} ProgressPayload
