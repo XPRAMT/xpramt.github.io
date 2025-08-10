@@ -89,7 +89,7 @@
   function toAbs(u, base) { return new URL(u, base).href; }
 
   function parseMediaM3U8(text, base) {
-    const lines = String(text).trim().split(/?/);
+    const lines = String(text).trim().split(/\r?\n/);
     const segments = [];
     let seq = 0, keyInfo = null, hasFMP4 = false;
     for (let i = 0; i < lines.length; i++) {
