@@ -1,39 +1,68 @@
-/* eslint-disable no-undef */
-/*!
- * downloadHLSAsMP4.js
- * 將 HLS (m3u8) 以純 JS 下載（支援 AES-128）並用 mux.js 轉封裝(MP4 transmux)
- * Author: extracted & refactored from XPRAMT’s userscript logic
- * License: MIT
+/*
+ * downloadHLSAsMP4.js — 集中產生訊息（msg）版
+ * -------------------------------------------------
+ * 用法（Usage）
+ * -------------------------------------------------
+ * await downloadHLSAsMP4({
+ *   m3u8Url: 'https://.../chunklist.m3u8',         // 必填：媒體 m3u8（非 master）
+ *   fileName: 'video.mp4',                          // 選填：輸出檔名（副檔名可省略）
+ *   headers: { Origin: 'https://ani.gamer.com.tw',  // 選填：自訂標頭，常用為 Origin/Referer
+ *             Referer: location.href },
+ *   signal: abortController?.signal,                // 選填：AbortSignal（中止下載）
+ *   onProgress: (p) => {                            // 回呼：每次進度更新都會帶出 p.msg
+ *     // p: { phase, percent, done, total, bytesDownloaded, msg }
+ *     infoDisplay.textContent = p.msg;              // 主程式只需顯示 p.msg
+ *   },
+ *   concurrency: 8                                  // 選填：同時下載分段數（預設 8）
+ * });
+ *
+ * 注意（Notes）
+ * - 僅支援 TS 切片 + 可選 AES-128 (AES-CBC)；不支援 SAMPLE-AES/DRM 與 fMP4(.m4s) 切片。
+ * - 若頁面已有 mux.js，此檔會直接使用；否則會嘗試從 CDN 載入。
+ * - 訊息（msg）統一由本檔產生，階段：prepare → master → downloading → transmux → finalize → done。
+ * - 下載完成後會觸發瀏覽器下載（Blob 連結）。
  */
-(function (global) {
+(function () {
   'use strict';
 
+  // ===================== 型別註解（JSDoc） =====================
   /**
-   * 主函式：下載 HLS 為 MP4（包含：master/media m3u8 解析、TS 下載、AES-128 解密、mux.js 轉封裝）
-   * @param {Object} options
-   * @param {string} options.m3u8Url  Master 或 Media 的 m3u8 URL
-   * @param {Object} [options.headers]  下載時要加的 HTTP 標頭（Userscript 環境可含 Referer/Origin）
-   * @param {Object} [options.hearder]  同上，為相容舊拼字
-   * @param {string} [options.fileName='video.mp4'] 輸出檔名
-   * @param {boolean} [options.autoDownload=true]  是否自動觸發下載
-   * @param {number} [options.concurrency=8]  同時下載切片數
-   * @param {(p:Progress)=>void} [options.onProgress]  進度回呼：每完成一片段或進入新階段會呼叫
-   * @param {(msg:string)=>void} [options.onStatus]  狀態訊息回呼（文字）
-   * @param {AbortSignal} [options.signal]  可中止（AbortController.signal）
-   * @param {string[]} [options.muxCdnCandidates]  自動載入 mux.js 的 CDN 候選
-   * @returns {Promise<{blob: Blob, fileName: string, save: ()=>void}>}
+   * @typedef {Object} ProgressPayload
+   * @property {'prepare'|'master'|'downloading'|'transmux'|'finalize'|'done'} phase
+   * @property {number} [percent]
+   * @property {number} [done]
+   * @property {number} [total]
+   * @property {number} [bytesDownloaded]
+   * @property {string} msg
    */
-// ===================== 小工具 =====================
+
+  /**
+   * @typedef {Object} HLSOptions
+   * @property {string} m3u8Url
+   * @property {string} [fileName]
+   * @property {Object.<string,string>} [headers]
+   * @property {AbortSignal} [signal]
+   * @property {(p: ProgressPayload)=>void} [onProgress]
+   * @property {number} [concurrency]
+   */
+
+  // ===================== 小工具 =====================
   const hasGM = typeof GM_xmlhttpRequest === 'function';
 
   function gmFetchText(url, headers = {}) {
-    if (!hasGM) return fetch(url, { headers }).then(r => r.text());
+    if (!hasGM) return fetch(url, { headers }).then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.text();
+    });
     return new Promise((resolve, reject) => {
       GM_xmlhttpRequest({ method: 'GET', url, headers, responseType: 'text', onload: r => resolve(r.responseText), onerror: reject, ontimeout: reject });
     });
   }
   function gmFetchArrayBuffer(url, headers = {}) {
-    if (!hasGM) return fetch(url, { headers }).then(r => r.arrayBuffer());
+    if (!hasGM) return fetch(url, { headers }).then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.arrayBuffer();
+    });
     return new Promise((resolve, reject) => {
       GM_xmlhttpRequest({ method: 'GET', url, headers, responseType: 'arraybuffer', onload: r => resolve(r.response), onerror: reject, ontimeout: reject });
     });
@@ -57,15 +86,12 @@
     throw new Error('mux.js 載入失敗' + (lastErr ? `：${lastErr}` : ''));
   }
 
-  function formatMB(n) {
-    if (!Number.isFinite(n)) return 0;
-    return Math.floor(n / 1048576);
-  }
-
   function toAbs(u, base) { return new URL(u, base).href; }
 
   function parseMediaM3U8(text, base) {
-    const lines = String(text).trim().split(/\r?\n/);
+    const lines = String(text).trim().split(/
+?
+/);
     const segments = [];
     let seq = 0, keyInfo = null, hasFMP4 = false;
     for (let i = 0; i < lines.length; i++) {
@@ -115,23 +141,23 @@
   }
 
   // ===================== 訊息產生（集中於本檔） =====================
+  function formatMB(n) {
+    if (!Number.isFinite(n)) return 0;
+    return Math.floor(n / 1048576);
+  }
+  function pctStr(v) {
+    return (typeof v === 'number') ? `(${Math.max(0, Math.min(100, Math.round(v)))}%)` : '';
+  }
   function buildMsg(p) {
-    const pct = (v) => (typeof v === 'number' ? `(${Math.max(0, Math.min(100, Math.round(v)))}%)` : '');
     switch (p.phase) {
-      case 'prepare':
-        return '準備中...';
-      case 'master':
-        return '解析清單...';
+      case 'prepare': return '準備中...';
+      case 'master': return '解析清單...';
       case 'downloading': {
-        const hasSeg = Number.isFinite(p.done) && Number.isFinite(p.total);
-        const hasBytes = Number.isFinite(p.bytesDownloaded);
-        const hasTotalBytes = Number.isFinite(p.totalBytes);
-        let msg = '下載中';
-        if (hasBytes && hasTotalBytes) msg += ` ${formatMB(p.bytesDownloaded)}/${formatMB(p.totalBytes)}MB`;
-        else if (hasBytes) msg += ` ${formatMB(p.bytesDownloaded)}MB`;
-        if (hasSeg) msg += ` ${p.done}/${p.total}`;
-        if (typeof p.percent === 'number') msg += ` ${pct(p.percent)}`;
-        return msg;
+        const parts = ['下載中'];
+        if (Number.isFinite(p.bytesDownloaded)) parts.push(`${formatMB(p.bytesDownloaded)}MB`);
+        if (Number.isFinite(p.done) && Number.isFinite(p.total)) parts.push(`${p.done}/${p.total}`);
+        if (Number.isFinite(p.percent)) parts.push(pctStr(p.percent));
+        return parts.join(' ');
       }
       case 'transmux':
       case 'finalize':
@@ -146,22 +172,23 @@
   function makeReporter(onProgress) {
     let last = {};
     return function report(patch) {
-      const p = Object.assign({}, last, patch);
-      if (!p.msg) p.msg = buildMsg(p);
+      const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 }, last, patch);
+      p.msg = buildMsg(p);
       last = p;
       if (typeof onProgress === 'function') onProgress(p);
     };
   }
 
   // ===================== 主函式 =====================
+  /** @param {HLSOptions} opts */
   async function downloadHLSAsMP4(opts) {
     const {
       m3u8Url,
       fileName = 'video.mp4',
       headers = {},
       signal,
-      onProgress
-      // onStatus 不再必須，若外部仍傳入也不會破壞相容性
+      onProgress,
+      concurrency = 8
     } = opts || {};
 
     if (!m3u8Url) throw new Error('m3u8Url 必填');
@@ -192,12 +219,14 @@
     const total = segments.length;
     const outTS = new Array(total);
     let done = 0, bytesDownloaded = 0;
+
     let aborted = false; if (signal) signal.addEventListener('abort', () => { aborted = true; });
 
     report({ phase: 'downloading', done, total, percent: 0, bytesDownloaded });
 
-    const CONCURRENCY = 8;
+    const CONCURRENCY = Math.max(1, Math.floor(concurrency));
     let cursor = 0;
+
     async function worker() {
       while (true) {
         const i = cursor++;
@@ -214,19 +243,21 @@
         done++;
         bytesDownloaded += plain.byteLength;
         const percent = Math.round((done / total) * 100);
-        if (done % 2 === 0 || percent >= 99) { // 控制更新頻率
+        if (done % 2 === 0 || percent >= 99) {
           report({ phase: 'downloading', done, total, percent, bytesDownloaded });
           await yieldToUI();
         }
       }
     }
+
     await Promise.all(Array(CONCURRENCY).fill(0).map(worker));
 
-    // 讓「100%」能先畫出來
+    // 讓 100% 與最後一筆下載進度先呈現
+    report({ phase: 'downloading', done, total, percent: 100, bytesDownloaded });
     await yieldToUI();
 
     // ---- 轉封裝 ----
-    report({ phase: 'transmux', percent: 0 }); // 這裡會使呼叫端顯示「合併中...」
+    report({ phase: 'transmux', percent: 0 }); // 呼叫端會顯示「合併中...」
     await yieldToUI();
 
     await ensureMuxJS();
@@ -246,7 +277,7 @@
     });
 
     // 簡易轉封裝進度（依筆數估計）：最多 50 次更新
-    const batch = Math.max(1, Math.ceil(total / 50));
+    const batch = Math.max(1, Math.ceil(outTS.length / 50));
     for (let i = 0; i < outTS.length; i++) {
       transmuxer.push(outTS[i]);
       if ((i + 1) % batch === 0 || i === outTS.length - 1) {
@@ -257,7 +288,7 @@
     }
     transmuxer.flush();
 
-    report({ phase: 'finalize' }); // 呼叫端仍會顯示「合併中...」
+    report({ phase: 'finalize' }); // 仍顯示「合併中...」
     await yieldToUI();
 
     const blob = new Blob(mp4Parts, { type: 'video/mp4' });
@@ -270,8 +301,7 @@
     report({ phase: 'done', percent: 100, msg: '完成！' });
   }
 
-  // 導出到全域（Userscript 以 @require 載入後可直接呼叫）
+  // 導出到全域
   if (typeof window !== 'undefined') window.downloadHLSAsMP4 = downloadHLSAsMP4;
   else if (typeof self !== 'undefined') self.downloadHLSAsMP4 = downloadHLSAsMP4;
-
 })();
