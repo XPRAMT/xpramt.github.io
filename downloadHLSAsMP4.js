@@ -1,5 +1,5 @@
 /*
- * downloadHLSAsMP4.js — 集中產生訊息（msg）版
+ * downloadHLSAsMP4.js — 集中產生訊息（msg）版（修正版）
  * -------------------------------------------------
  * 用法（Usage）
  * -------------------------------------------------
@@ -8,19 +8,18 @@
  *   fileName: 'video.mp4',                          // 選填：輸出檔名（副檔名可省略）
  *   headers: { Origin: 'https://ani.gamer.com.tw',  // 選填：自訂標頭，常用為 Origin/Referer
  *             Referer: location.href },
- *   signal: abortController?.signal,                // 選填：AbortSignal（中止下載）
+ *   signal: abortController?.signal,                // 選填：AbortSignal（可略）
+ *   concurrency: 8,                                 // 選填：同時下載分段數（預設 8）
  *   onProgress: (p) => {                            // 回呼：每次進度更新都會帶出 p.msg
  *     // p: { phase, percent, done, total, bytesDownloaded, msg }
  *     infoDisplay.textContent = p.msg;              // 主程式只需顯示 p.msg
- *   },
- *   concurrency: 8                                  // 選填：同時下載分段數（預設 8）
+ *   }
  * });
  *
- * 注意（Notes）
- * - 僅支援 TS 切片 + 可選 AES-128 (AES-CBC)；不支援 SAMPLE-AES/DRM 與 fMP4(.m4s) 切片。
+ * 註：
+ * - 僅支援 TS 切片 + 可選 AES-128 (AES-CBC)；不支援 SAMPLE-AES/DRM 與 fMP4(.m4s)。
  * - 若頁面已有 mux.js，此檔會直接使用；否則會嘗試從 CDN 載入。
- * - 訊息（msg）統一由本檔產生，階段：prepare → master → downloading → transmux → finalize → done。
- * - 下載完成後會觸發瀏覽器下載（Blob 連結）。
+ * - 訊息（msg）統一由本檔產生，phase：prepare → master → downloading → transmux → finalize → done。
  */
 (function () {
   'use strict';
@@ -149,7 +148,6 @@
     return (typeof v === 'number') ? `(${Math.max(0, Math.min(100, Math.round(v)))}%)` : '';
   }
   function buildMsg(p) {
-    console.log('[downloadHLSAsMP4] buildMsg', p.phase);
     switch (p.phase) {
       case 'prepare': return '準備中...';
       case 'master': return '解析清單...';
@@ -175,7 +173,8 @@
     return function report(patch) {
       const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 }, last, patch);
       p.msg = buildMsg(p);
-      console.log('[downloadHLSAsMP4]', p.msg);
+      // p.msg 顯示在控制台（避免洗版：僅在訊息改變時輸出）
+      try { if (!last.msg || p.msg !== last.msg) console.log('[downloadHLSAsMP4]', p.msg); } catch (_) {}
       last = p;
       if (typeof onProgress === 'function') onProgress(p);
     };
