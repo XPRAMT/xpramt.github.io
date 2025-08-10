@@ -171,7 +171,7 @@
   function makeReporter(onProgress) {
     let last = {};
     return function report(patch) {
-      const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 }, last, patch);
+      const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 ,msg: 'None'}, last, patch);
       p.msg = buildMsg(p);
       // p.msg 顯示在控制台（避免洗版：僅在訊息改變時輸出）
       try { if (!last.msg || p.msg !== last.msg) console.log('[downloadHLSAsMP4]', p.msg); } catch (_) {}
