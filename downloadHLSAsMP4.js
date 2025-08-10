@@ -152,7 +152,7 @@
       case 'master': return '解析清單...';
       case 'downloading': {
         const parts = ['下載中'];
-        if (Number.isFinite(p.bytesDownloaded)) parts.push(`${formatMB(p.bytesDownloaded)}MB`);
+        //if (Number.isFinite(p.bytesDownloaded)) parts.push(`${formatMB(p.bytesDownloaded)}MB`);
         if (Number.isFinite(p.done) && Number.isFinite(p.total)) parts.push(`${p.done}/${p.total}`);
         if (Number.isFinite(p.percent)) parts.push(pctStr(p.percent));
         return parts.join(' ');
