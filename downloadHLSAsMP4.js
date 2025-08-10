@@ -174,6 +174,7 @@
     return function report(patch) {
       const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 }, last, patch);
       p.msg = buildMsg(p);
+      console.log(p.msg)
       last = p;
       if (typeof onProgress === 'function') onProgress(p);
     };
