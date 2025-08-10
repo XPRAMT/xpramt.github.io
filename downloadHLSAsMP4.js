@@ -149,6 +149,7 @@
     return (typeof v === 'number') ? `(${Math.max(0, Math.min(100, Math.round(v)))}%)` : '';
   }
   function buildMsg(p) {
+    console.log('[downloadHLSAsMP4] buildMsg', p.phase);
     switch (p.phase) {
       case 'prepare': return '準備中...';
       case 'master': return '解析清單...';
@@ -174,7 +175,7 @@
     return function report(patch) {
       const p = Object.assign({ phase: 'prepare', done: 0, total: 0, percent: 0, bytesDownloaded: 0 }, last, patch);
       p.msg = buildMsg(p);
-      console.log(p.msg)
+      console.log('[downloadHLSAsMP4]', p.msg);
       last = p;
       if (typeof onProgress === 'function') onProgress(p);
     };
