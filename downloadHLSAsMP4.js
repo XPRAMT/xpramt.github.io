@@ -186,7 +186,7 @@
       headers = {},
       signal,
       onProgress,
-      concurrency = 8
+      concurrency = 4
     } = opts || {};
 
     if (!m3u8Url) throw new Error('m3u8Url 必填');
