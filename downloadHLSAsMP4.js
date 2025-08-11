@@ -24,7 +24,7 @@
 (function () {
   'use strict';
   // ===== 版本（Version） =====
-  const DWHLS_VERSION = '1.1';
+  const DWHLS_VERSION = '1.2';
   // ===================== 型別註解（JSDoc） =====================
   /**
    * @typedef {Object} ProgressPayload
@@ -267,23 +267,17 @@
       (MUX && MUX.partial && MUX.partial.Transmuxer);
     if (!MUX || !TransmuxerClass) throw new Error('mux.js 已載入，但未找到 Transmuxer 類別。');
 
-    const transmuxer = new TransmuxerClass({ keepOriginalTimestamps: true });
+    const transmuxer = new TransmuxerClass({ 
+      keepOriginalTimestamps: false,
+      remux: true, });
     const mp4Parts = [];
     transmuxer.on('data', (segment) => {
       if (segment.initSegment) mp4Parts.push(segment.initSegment);
       if (segment.data) mp4Parts.push(segment.data);
     });
-
-    // 簡易轉封裝進度（依筆數估計）：最多 50 次更新
-    const batch = Math.max(1, Math.ceil(outTS.length / 50));
-    for (let i = 0; i < outTS.length; i++) {
-      transmuxer.push(outTS[i]);
-      if ((i + 1) % batch === 0 || i === outTS.length - 1) {
-        const percent = Math.round(((i + 1) / outTS.length) * 100);
-        report({ phase: 'transmux', percent });
-        await yieldToUI();
-      }
-    }
+    // 逐片 ts 餵進去（務必照順序）
+    for (const ts of outTS) transmuxer.push(ts);
+    
     transmuxer.flush();
 
     report({ phase: 'finalize' }); // 仍顯示「合併中...」
