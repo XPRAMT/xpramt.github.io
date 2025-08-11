@@ -1,1 +1,1 @@
-[https://xpramt.github.io/](https://xpramt.github.io/)
+[xpramt.github.io](https://xpramt.github.io/)
