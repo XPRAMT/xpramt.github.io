@@ -1,30 +1,31 @@
 /*
- * downloadHLSAsMP4.js — 集中產生訊息（msg）版（修正版）
+ * downloadHLSAsMKV.js — 使用 ffmpeg.wasm 合併為 .mkv
  * -------------------------------------------------
  * 用法（Usage）
  * -------------------------------------------------
- * await downloadHLSAsMP4({
+ * await downloadHLSAsMKV({
  *   m3u8Url: 'https://.../chunklist.m3u8',         // 必填：媒體 m3u8（非 master）
- *   fileName: 'video.mp4',                          // 選填：輸出檔名（副檔名可省略）
+ *   fileName: 'video.mkv',                          // 選填：輸出檔名（副檔名可省略，會自動補 .mkv）
  *   headers: { Origin: 'https://ani.gamer.com.tw',  // 選填：自訂標頭，常用為 Origin/Referer
  *             Referer: location.href },
- *   signal: abortController?.signal,                // 選填：AbortSignal（可略）
+ *   signal: abortController?.signal,                // 選填：AbortSignal
  *   concurrency: 8,                                 // 選填：同時下載分段數（預設 8）
  *   onProgress: (p) => {                            // 回呼：每次進度更新都會帶出 p.msg
  *     // p: { phase, percent, done, total, bytesDownloaded, msg }
- *     infoDisplay.textContent = p.msg;              // 主程式只需顯示 p.msg
+ *     infoDisplay.textContent = p.msg;              // 例如：主程式只需顯示 p.msg
  *   }
  * });
  *
  * 註：
  * - 僅支援 TS 切片 + 可選 AES-128 (AES-CBC)；不支援 SAMPLE-AES/DRM 與 fMP4(.m4s)。
- * - 若頁面已有 mux.js，此檔會直接使用；否則會嘗試從 CDN 載入。
+ * - 以 ffmpeg.wasm（FFmpeg WebAssembly）封裝成 MKV（Matroska）。
  * - 訊息（msg）統一由本檔產生，phase：prepare → master → downloading → transmux → finalize → done。
  */
 (function () {
   'use strict';
   // ===== 版本（Version） =====
-  const DWHLS_VERSION = '1.2';
+  const DWHLS_VERSION = '2.0';
+
   // ===================== 型別註解（JSDoc） =====================
   /**
    * @typedef {Object} ProgressPayload
@@ -68,22 +69,45 @@
     });
   }
 
-  async function ensureMuxJS() {
-    if (typeof muxjs !== 'undefined' || (typeof self !== 'undefined' && typeof self.muxjs !== 'undefined')) return;
+  async function ensureFFmpegNS() {
+    // 嘗試載入 @ffmpeg/ffmpeg 的 UMD 版（提供全域 FFmpeg 物件）
+    if (typeof FFmpeg !== 'undefined' && FFmpeg.createFFmpeg) return FFmpeg;
+
     const candidates = [
-      'https://cdn.jsdelivr.net/npm/mux.js@6.3.0/dist/mux.min.js',
-      'https://unpkg.com/mux.js@6.3.0/dist/mux.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/mux.js/6.3.0/mux.min.js'
+      'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js',
+      'https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js'
     ];
     let lastErr = null;
     for (const u of candidates) {
       try {
         const code = await gmFetchText(u);
-        (new Function(code))();
-        if (typeof muxjs !== 'undefined' || (typeof self !== 'undefined' && typeof self.muxjs !== 'undefined')) return;
+        (new Function(code))(); // 定義 window.FFmpeg
+        if (typeof FFmpeg !== 'undefined' && FFmpeg.createFFmpeg) return FFmpeg;
       } catch (e) { lastErr = e; }
     }
-    throw new Error('mux.js 載入失敗' + (lastErr ? `：${lastErr}` : ''));
+    throw new Error('ffmpeg.wasm 載入失敗' + (lastErr ? `：${lastErr}` : ''));
+  }
+
+  async function loadFFmpegWithFallback(report) {
+    const ns = await ensureFFmpegNS();
+    const coreCandidates = [
+      'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js',
+      'https://unpkg.com/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js'
+    ];
+    let lastErr = null;
+    for (const corePath of coreCandidates) {
+      try {
+        const ffmpeg = ns.createFFmpeg({ log: false, corePath });
+        // 讓 transmux 階段也能回報進度（ratio 0~1）
+        ffmpeg.setProgress(({ ratio }) => {
+          const percent = Math.max(0, Math.min(100, Math.round((ratio || 0) * 100)));
+          report({ phase: 'transmux', percent, msg: '合併中...' });
+        });
+        await ffmpeg.load();
+        return ffmpeg;
+      } catch (e) { lastErr = e; }
+    }
+    throw new Error('ffmpeg-core 載入失敗' + (lastErr ? `：${lastErr}` : ''));
   }
 
   function toAbs(u, base) { return new URL(u, base).href; }
@@ -152,7 +176,6 @@
       case 'master': return '解析清單...';
       case 'downloading': {
         const parts = ['下載中'];
-        //if (Number.isFinite(p.bytesDownloaded)) parts.push(`${formatMB(p.bytesDownloaded)}MB`);
         if (Number.isFinite(p.done) && Number.isFinite(p.total)) parts.push(`${p.done}/${p.total}`);
         if (Number.isFinite(p.percent)) parts.push(pctStr(p.percent));
         return parts.join(' ');
@@ -177,16 +200,20 @@
     };
   }
 
-  // ===================== 主函式 =====================
+  function stripExt(name) {
+    return String(name || '').replace(/\.[^/.]+$/, '');
+  }
+
+  // ===================== 主函式（ffmpeg.wasm → MKV） =====================
   /** @param {HLSOptions} opts */
-  async function downloadHLSAsMP4(opts) {
+  async function downloadHLSAsMKV(opts) {
     const {
       m3u8Url,
-      fileName = 'video.mp4',
+      fileName = 'video.mkv',
       headers = {},
       signal,
       onProgress,
-      concurrency = 4
+      concurrency = 8
     } = opts || {};
 
     if (!m3u8Url) throw new Error('m3u8Url 必填');
@@ -254,39 +281,49 @@
     report({ phase: 'downloading', done, total, percent: 100, bytesDownloaded });
     await yieldToUI();
 
-    // ---- 轉封裝 ----
+    // ---- 合併並封裝為 MKV (ffmpeg.wasm) ----
     report({ phase: 'transmux', percent: 0 }); // 呼叫端會顯示「合併中...」
     await yieldToUI();
 
-    await ensureMuxJS();
-    const MUX = (typeof muxjs !== 'undefined') ? muxjs : (typeof self !== 'undefined' ? self.muxjs : null);
-    const TransmuxerClass =
-      (MUX && MUX.Transmuxer) ||
-      (MUX && MUX.mp4 && MUX.mp4.Transmuxer) ||
-      (MUX && MUX.flv && MUX.flv.Transmuxer) ||
-      (MUX && MUX.partial && MUX.partial.Transmuxer);
-    if (!MUX || !TransmuxerClass) throw new Error('mux.js 已載入，但未找到 Transmuxer 類別。');
+    // 將所有 TS 片段串接成單一 input.ts，避免在虛擬 FS 寫入大量小檔
+    const totalBytes = outTS.reduce((s, x) => s + (x ? x.byteLength : 0), 0);
+    const inputTS = new Uint8Array(totalBytes);
+    for (let off = 0, i = 0; i < outTS.length; i++) {
+      const part = outTS[i];
+      inputTS.set(part, off);
+      off += part.byteLength;
+    }
 
-    const transmuxer = new TransmuxerClass({ 
-      keepOriginalTimestamps: false,
-      remux: true, });
-    const mp4Parts = [];
-    transmuxer.on('data', (segment) => {
-      if (segment.initSegment) mp4Parts.push(segment.initSegment);
-      if (segment.data) mp4Parts.push(segment.data);
-    });
-    // 逐片 ts 餵進去（務必照順序）
-    for (const ts of outTS) transmuxer.push(ts);
-    
-    transmuxer.flush();
+    // 載入 ffmpeg.wasm
+    const ffmpeg = await loadFFmpegWithFallback(report);
+
+    // 寫入虛擬檔案系統
+    ffmpeg.FS('writeFile', 'input.ts', inputTS);
+
+    // 以「不重編碼（-c copy）」轉封裝為 Matroska（.mkv）
+    // 若特定串流有時間戳不連續，可視情況加上 -copyts 或 -fflags +genpts（此處先不加，以保守設定為主）
+    const outName = (String(fileName || 'video.mkv').toLowerCase().endsWith('.mkv')
+      ? fileName
+      : `${stripExt(fileName || 'video')}.mkv`);
+
+    await ffmpeg.run(
+      '-i', 'input.ts',
+      '-c', 'copy',
+      '-dn',                 // 丟棄資料流（teletext/metadata），避免相容性問題
+      outName
+    );
 
     report({ phase: 'finalize' }); // 仍顯示「合併中...」
     await yieldToUI();
 
-    const blob = new Blob(mp4Parts, { type: 'video/mp4' });
+    // 取回輸出
+    const outData = ffmpeg.FS('readFile', outName);
+    const blob = new Blob([outData.buffer], { type: 'video/x-matroska' });
+
+    // 下載
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = fileName.endsWith('.mp4') ? fileName : `${fileName}.mp4`;
+    a.download = outName;
     a.click();
     URL.revokeObjectURL(a.href);
 
@@ -295,12 +332,12 @@
 
   // 導出到全域 + 版本號
   if (typeof window !== 'undefined') {
-    window.downloadHLSAsMP4 = downloadHLSAsMP4;
-    window.downloadHLSAsMP4Version = DWHLS_VERSION;
+    window.downloadHLSAsMKV = downloadHLSAsMKV;
+    window.downloadHLSAsMKVVersion = DWHLS_VERSION;
   } else if (typeof self !== 'undefined') {
-    self.downloadHLSAsMP4 = downloadHLSAsMP4;
-    self.downloadHLSAsMP4Version = DWHLS_VERSION;
+    self.downloadHLSAsMKV = downloadHLSAsMKV;
+    self.downloadHLSAsMKVVersion = DWHLS_VERSION;
   }
-  try { downloadHLSAsMP4.version = DWHLS_VERSION; } catch (_) {}
-  
+  try { downloadHLSAsMKV.version = DWHLS_VERSION; } catch (_) {}
+
 })();
