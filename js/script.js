@@ -1,31 +1,67 @@
+//script.js
+
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 頁籤切換功能 ---
+    // --- 頁籤與內容管理 ---
     const tabs = document.querySelectorAll('.nav-tab');
     const contentSections = document.querySelectorAll('.content-section');
 
+    /**
+     * 根據提供的 ID 啟動對應的頁籤和內容區塊
+     * @param {string} targetId - 要啟動的區塊 ID (例如 "projects")
+     */
+    function activateTab(targetId) {
+        // 如果沒有提供 targetId，就預設為第一個區塊的 ID
+        if (!targetId) {
+            const firstSection = contentSections[0];
+            if (!firstSection) return; // 如果沒有內容區塊，就直接返回
+            targetId = firstSection.id;
+        }
+
+        // 更新內容區塊的顯示狀態
+        contentSections.forEach(section => {
+            section.classList.toggle('active', section.id === targetId);
+        });
+
+        // 更新導覽列頁籤的 active 狀態
+        tabs.forEach(tab => {
+            // 檢查 tab 的 href 是否對應 targetId
+            const tabHref = tab.getAttribute('href');
+            tab.classList.toggle('active', tabHref === `#${targetId}`);
+        });
+    }
+
+    // --- 事件監聽 ---
+    // 監聽導覽列頁籤的點擊
     tabs.forEach(tab => {
         tab.addEventListener('click', (event) => {
-            event.preventDefault(); // 防止頁面跳轉
+            const href = tab.getAttribute('href');
 
-            // 移除所有頁籤的 active class
-            tabs.forEach(t => t.classList.remove('active'));
-            // 為點擊的頁籤添加 active class
-            tab.classList.add('active');
+            // 只處理頁面內的錨點連結
+            if (href && href.startsWith('#')) {
+                event.preventDefault(); // 阻止頁面預設的跳轉行為
+                const targetId = href.substring(1);
 
-            const targetId = tab.getAttribute('data-tab');
+                // 更新 URL hash，但不要觸發 history 堆疊
+                // 這會讓 URL 變更，但不會讓頁面感覺像刷新一樣
+                history.pushState(null, '', href);
 
-            // 隱藏所有內容區塊
-            contentSections.forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // 顯示對應的內容區塊
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.classList.add('active');
+                // 啟動對應的頁籤
+                activateTab(targetId);
             }
         });
     });
+
+    // --- 頁面初始載入邏輯 ---
+    // 檢查 URL 是否帶有 hash
+    const currentHash = window.location.hash;
+    if (currentHash) {
+        // 如果有 hash (例如 #articles)，就啟動對應的頁籤
+        const targetId = currentHash.substring(1);
+        activateTab(targetId);
+    } else {
+        // 如果沒有 hash，就啟動預設的第一個頁籤
+        activateTab();
+    }
 
 
     // --- 主題切換功能 ---

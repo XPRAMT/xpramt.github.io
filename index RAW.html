@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XPRAMT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> </head>
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+            <h1 class="site-title">XPRAMT</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#projects" class="nav-tab active" data-tab="projects">專案</a></li>
+                    <li><a href="#articles" class="nav-tab" data-tab="articles">文章</a></li>
+                    <li><a href="#strawberry" class="nav-tab" data-tab="strawberry">草莓</a></li>
+                    <li><a href="#about" class="nav-tab" data-tab="about">關於我</a></li>
+                </ul>
+            </nav>
+            <button id="theme-switcher" class="theme-switcher" aria-label="切換色彩主題">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <section id="projects" class="content-section active">
+            <h2><i class="fas fa-project-diagram"></i> 專案介紹</h2>
+            <div class="project-grid">
+                <div class="card project-card">
+                    <h3>聲道映射工具 (Audio Channel Mapping)</h3>
+                    <p>一個使用 Python 和 PyQt6 開發的桌面應用程式，提供直觀的介面來重新分配多聲道音訊到不同的輸出裝置</p>
+                    <div class="project-links">
+                        <a href="https://github.com/XPRAMT/audio-channel-mapping" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> 查看 GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <h3>MoeFusion</h3>
+                    <p>一個基於 Python 的圖像處理專案。此專案支援多種圖像處理功能，包括:截圖拼接、waifu2x多層疊圖、色彩對齊和一些基礎功能</p>
+                     <div class="project-links">
+                        <a href="https://github.com/XPRAMT/MoeFusion" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> 查看 GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles" class="content-section">
+            <h2><i class="fas fa-feather-alt"></i> 技術文章</h2>
+            <div class="article-list">
+                <article class="card article-card">
+                    <h3 class="article-title">PyQt6 中多執行緒避免 GUI 卡死的最佳實踐</h3>
+                    <p class="article-summary">在開發桌面應用時，任何耗時的操作都應該放在獨立的執行緒中，以防止主 UI 執行緒被阻塞。本文將探討如何在 PyQt6 中使用 QThread 來處理背景任務，並與 qfluentwidgets 完美結合...</p>
+                    <div class="article-meta">
+                        <span class="tag">PyQt6</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">GUI</span>
+                    </div>
+                </article>
+            
+            </div>
+        </section>
+
+        <section id="strawberry" class="content-section">
+            <h2><i class="fas fa-leaf"></i> 草莓全方位介紹</h2>
+
+            <div class="subsection">
+                <h3><i class="fas fa-seedling"></i> 草莓品種</h3>
+                <div class="info-grid">
+                    <div class="card info-card">
+                        <h4>豐香</h4>
+                        <div class="image-gallery">
+                            <img src="https://img.ltn.com.tw/Upload/food/page/2019/03/03/190303-8691-1-WAZMQ.jpg" alt="豐香草莓 1">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSnto8f7_VdZNTFeDBVhZfndVl-VS5Ltjc6w&s" alt="豐香草莓 2" >
+                            <img src="https://images.agriharvest.tw/wp-content/uploads/2020/12/103103-1024x768.jpg" alt="豐香草莓 3" >
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTo4KLi4l0Qfkq4okjo_Kgl6pYTqhJFV0mykw&s" alt="豐香草莓 4" class="hidden-image">
+                        </div>
+                        <button class="expand-gallery-btn">顯示更多</button>
+                        <p><strong>介紹：</strong> 台灣早期主要栽培品種，果型大，呈短胖的圓錐形，果肉細緻多汁，酸甜適中，帶有濃郁的草莓香氣。</p>
+                        <p><strong>商家：</strong> <a href="#" target="_blank">大湖草莓農場</a></p>
+                    </div>
+
+                    <div class="card info-card">
+                        <h4>香水</h4>
+                        <div class="image-gallery">
+                            <img src="https://via.placeholder.com/400x300.png?text=香水草莓+1" alt="香水草莓 1" >
+                            <img src="https://via.placeholder.com/400x300.png?text=香水草莓+2" alt="香水草莓 2">
+                            <img src="https://via.placeholder.com/400x300.png?text=香水草莓+3" alt="香水草莓 3">
+                            <img src="https://via.placeholder.com/400x300.png?text=香水草莓+4" alt="香水草莓 4" class="hidden-image">
+                            <img src="https://via.placeholder.com/400x300.png?text=香水草莓+5" alt="香水草莓 5" class="hidden-image">
+                        </div>
+                        <button class="expand-gallery-btn">顯示更多</button>
+                        <p><strong>介紹：</strong> 果實呈漂亮的長錐形，色澤鮮紅亮麗，口感紮實，酸度較高，風味獨特，非常適合用於製作甜點和加工品。</p>
+                        <p><strong>商家：</strong> <a href="#" target="_blank">香水草莓園</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3><i class="fas fa-bug"></i> 草莓疾病</h3>
+                <div class="info-grid">
+                    <div class="card info-card">
+                        <h4>灰黴病 (Gray Mold)</h4>
+                        <div class="image-gallery">
+                            <img src="https://via.placeholder.com/400x300.png?text=灰黴病+1" alt="灰黴病 1">
+                            <img src="https://via.placeholder.com/400x300.png?text=灰黴病+2" alt="灰黴病 2">
+                            <img src="https://via.placeholder.com/400x300.png?text=灰黴病+3" alt="灰黴病 3">
+                        </div>
+                        <p><strong>症狀介紹：</strong> 主要危害果實、花器與葉片。果實染病後會出現水浸狀淡褐色斑點，隨後長出灰色黴層，導致果實軟腐。</p>
+                        <p><strong>防治方法：</strong> 保持良好通風，降低濕度。避免過度密植，及時摘除病果、病葉並集中銷毀。可使用波爾多液或相關殺菌劑進行預防。</p>
+                    </div>
+
+                    <div class="card info-card">
+                        <h4>白粉病 (Powdery Mildew)</h4>
+                        <div class="image-gallery">
+                            <img src="https://via.placeholder.com/400x300.png?text=白粉病+1" alt="白粉病 1">
+                            <img src="https://via.placeholder.com/400x300.png?text=白粉病+2" alt="白粉病 2">
+                            <img src="https://via.placeholder.com/400x300.png?text=白粉病+3" alt="白粉病 3">
+                            <img src="https://via.placeholder.com/400x300.png?text=白粉病+4" alt="白粉病 4" class="hidden-image">
+                        </div>
+                        <button class="expand-gallery-btn">顯示更多</button>
+                        <p><strong>症狀介紹：</strong> 葉片表面會出現白色粉狀斑點，後期會擴大覆蓋全葉，導致葉片捲曲、變黃，影響光合作用，果實也會受感染而品質下降。</p>
+                        <p><strong>防治方法：</strong> 加強通風，避免氮肥過量。發病初期可噴灑硫磺懸浮劑或三唑酮等藥劑進行防治。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <h2><i class="fas fa-user-circle"></i> 關於我</h2>
+            <div class="card about-card">
+                <p>你好，我是一位對技術充滿熱情的開發者。</p>
+                <p>我的主要研究領域集中在<strong>圖像、影片及聲音處理</strong>，並致力於將這些技術應用於PC和Android平台。</p>
+                <ul>
+                    <li>🖥️ <strong>PC 開發:</strong> 我熟悉使用 Python、PyQt6 及 PyQt-Fluent-Widgets 來打造美觀且功能強大的桌面應用程式。</li>
+                    <li>📱 <strong>Android 開發:</strong> 我使用 Kotlin 進行原生 Android 應用程式的開發。</li>
+                </ul>
+                <p>我注重程式碼的品質與使用者體驗，特別是在 GUI 設計方面，我堅持：</p>
+                <ul>
+                    <li>確保應用程式能處理包含中文的檔案路徑。</li>
+                    <li>精細管理按鈕等 UI 元件的狀態，提升互動的直覺性。</li>
+                    <li>透過多執行緒處理耗時任務，確保 GUI 的流暢性。</li>
+                </ul>
+                <p>歡迎透過 GitHub 查看我的專案，或在技術文章區與我交流！</p>
+
+                <!--follow--><a href="fb://page/1545712035725947" target="_blank"><img height="50" src="https://i.imgur.com/dmou6WG.png"/></a>
+                <a href="https://twitter.com/todo635387" target="_blank"><img height="50" src="https://i.imgur.com/FKvcQiF.png"/></a>
+                <a href="https://www.pixiv.net/users/16069721" target="_blank"><img height="50" src="https://i.imgur.com/sLYNnQO.png"/></a>
+                <a href="https://www.youtube.com/channel/UC2LOmTgIoq1mSmmk7EE5xpw" target="_blank"><img height="50" src="https://i.imgur.com/g9nSOwW.png"/></a>
+                <a href="https://space.bilibili.com/692618336/video" target="_blank"><img height="50" src="https://i.imgur.com/SV9WGxw.png"/></a>
+                <a href="https://play.google.com/store/apps/developer?id=XPRAMT" target="_blank"><img height="50" src="https://i.imgur.com/MBAWxFr.png"/></a>
+                <a href="https://github.com/XPRAMT" target="_blank"><img height="50" src="https://i.imgur.com/tTto2FN.png"/></a>
+                <a href="https://www.aplaybox.com/u/106284038" target="_blank"><img height="45" src="https://i.imgur.com/iqtBAc0.png"/></a>
+                <a href="https://greasyfork.org/zh-TW/users/452247-xpramt" target="_blank"><img height="50" src="https://i.imgur.com/xP0Pz2l.png"/></a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 By XPRAMT</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

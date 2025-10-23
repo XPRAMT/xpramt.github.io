@@ -1,0 +1,38 @@
+{
+  "projects": [
+    {
+      "url": "project/AudioChannelMapping.html",
+      "title": "聲道映射工具 (Audio Channel Mapping)",
+      "description": "一個使用 Python 和 PyQt6 開發的桌面應用程式，提供直觀的介面來重新分配多聲道音訊到不同的輸出裝置",
+      "github": "https://github.com/XPRAMT/audio-channel-mapping"
+    },
+    {
+      "url": "project/MoeFusion.html",
+      "title": "MoeFusion",
+      "description": "一個基於 Python 的圖像處理專案。此專案支援多種圖像處理功能，包括:截圖拼接、waifu2x多層疊圖、色彩對齊和一些基礎功能",
+      "github": "https://github.com/XPRAMT/MoeFusion"
+    }
+  ],
+  "articles": [
+    {
+      "url": "article/article_a.html",
+      "title": "PyQt6 中多執行緒避免 GUI 卡死的最佳實踐",
+      "summary": "在開發桌面應用時，任何耗時的操作都應該放在獨立的執行緒中，以防止主 UI 執行緒被阻塞。本文將探討如何在 PyQt6 中使用 QThread 來處理背景任務，並與 qfluentwidgets 完美結合...",
+      "tags": ["PyQt6", "Python", "GUI"]
+    }
+  ],
+  "strawberries": [
+    {
+      "url": "strawberry/豐香.html",
+      "name": "豐香",
+      "image_url": "https://img.ltn.com.tw/Upload/food/page/2019/03/03/190303-8691-1-WAZMQ.jpg",
+      "description": "台灣早期主要栽培品種，果型大，呈短胖的圓錐形，果肉細緻多汁，酸甜適中，帶有濃郁的草莓香氣。"
+    },
+    {
+      "url": "strawberry/香水.html",
+      "name": "香水",
+      "image_url": "https://via.placeholder.com/400x300.png?text=香水草莓+1",
+      "description": "果實呈漂亮的長錐形，色澤鮮紅亮麗，口感紮實，酸度較高，風味獨特，非常適合用於製作甜點和加工品。"
+    }
+  ]
+}
