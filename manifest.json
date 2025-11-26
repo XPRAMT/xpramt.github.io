@@ -26,13 +26,25 @@
       "url": "strawberry/豐香.html",
       "name": "豐香",
       "image_url": "https://img.ltn.com.tw/Upload/food/page/2019/03/03/190303-8691-1-WAZMQ.jpg",
-      "description": "台灣早期主要栽培品種，果型大，呈短胖的圓錐形，果肉細緻多汁，酸甜適中，帶有濃郁的草莓香氣。"
+      "description": ""
     },
     {
       "url": "strawberry/香水.html",
       "name": "香水",
       "image_url": "https://via.placeholder.com/400x300.png?text=香水草莓+1",
-      "description": "果實呈漂亮的長錐形，色澤鮮紅亮麗，口感紮實，酸度較高，風味獨特，非常適合用於製作甜點和加工品。"
+      "description": ""
+    },
+    {
+      "url": "strawberry/雪兔.html",
+      "name": "雪兔",
+      "image_url": "https://via.placeholder.com/400x300.png?text=香水草莓+1",
+      "description": ""
+    },
+    {
+      "url": "strawberry/粉黛.html",
+      "name": "粉黛",
+      "image_url": "img/DSC_0267.JPG",
+      "description": ""
     }
   ]
 }

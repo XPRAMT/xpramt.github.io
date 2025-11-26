@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>草莓重要病蟲害辨識與管理指南 | 苗栗區農業改良場</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        strawberry: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100 transition-colors duration-300"
+      x-data="appData()" 
+      x-init="initTheme()">
+
+    <nav class="sticky top-0 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-700 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3 cursor-pointer" @click="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-leaf text-green-600 text-2xl"></i>
+                    <span class="font-bold text-xl tracking-tight">
+                        草莓病蟲害<span class="text-strawberry-600">辨識指南</span>
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:block relative">
+                        <input type="text" 
+                               x-model="searchQuery" 
+                               placeholder="搜尋病徵、害蟲或品種..." 
+                               class="pl-10 pr-4 py-2 rounded-full bg-gray-100 dark:bg-slate-700 focus:ring-2 focus:ring-strawberry-500 focus:outline-none transition-all w-64 text-sm">
+                        <i class="fa-solid fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                    </div>
+
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" @click.outside="open = false" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-700 transition">
+                            <i class="fa-solid" :class="themeIcon"></i>
+                        </button>
+                        <div x-show="open" x-transition class="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700 py-2 text-sm">
+                            <button @click="setTheme('light')" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-2">
+                                <i class="fa-regular fa-sun"></i> 亮色
+                            </button>
+                            <button @click="setTheme('dark')" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-2">
+                                <i class="fa-regular fa-moon"></i> 暗色
+                            </button>
+                            <button @click="setTheme('system')" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 flex items-center gap-2">
+                                <i class="fa-solid fa-desktop"></i> 跟隨系統
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:hidden pb-3">
+                <input type="text" 
+                       x-model="searchQuery" 
+                       placeholder="搜尋關鍵字..." 
+                       class="w-full pl-4 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-slate-700 focus:ring-2 focus:ring-strawberry-500 focus:outline-none text-sm">
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative bg-gradient-to-br from-green-50 to-strawberry-50 dark:from-slate-800 dark:to-slate-900 py-12 lg:py-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
+                    守護您的<span class="text-strawberry-600">草莓園</span>
+                </h1>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                    彙整苗栗區農業改良場歷年診斷紀錄。提供炭疽病、萎凋病等重要病蟲害的特徵辨識、苗栗1號(戀香)品種特性，以及土壤肥培與IPM管理策略。
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <template x-for="tag in categories" :key="tag.id">
+                        <button @click="activeCategory = tag.id"
+                                :class="activeCategory === tag.id ? 'bg-strawberry-600 text-white ring-2 ring-strawberry-300' : 'bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-600'"
+                                class="px-6 py-2 rounded-full shadow-sm font-medium transition-all border border-gray-200 dark:border-slate-600">
+                            <span x-text="tag.name"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="absolute top-0 left-0 w-64 h-64 bg-green-200 dark:bg-green-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-strawberry-200 dark:bg-red-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-slate-700 pb-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white" x-text="getCategoryName(activeCategory)"></h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" x-show="searchQuery">
+                    搜尋結果: <span x-text="searchQuery"></span>
+                </p>
+            </div>
+            <span class="text-sm font-medium bg-gray-100 dark:bg-slate-700 px-3 py-1 rounded-lg">
+                共 <span x-text="filteredItems.length"></span> 項目
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <template x-for="item in filteredItems" :key="item.title">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-700 card-hover flex flex-col h-full">
+                    
+                    <div class="h-2 w-full" :class="getCategoryColor(item.category)"></div>
+                    
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded mb-2" 
+                                      :class="getCategoryBadgeClass(item.category)" 
+                                      x-text="item.category"></span>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white" x-text="item.title"></h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 italic" x-text="item.englishName"></p>
+                            </div>
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md"
+                                 :class="getCategoryColor(item.category)">
+                                <i :class="item.icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="prose dark:prose-invert text-sm text-gray-600 dark:text-gray-300 mb-4 flex-1">
+                            <p x-html="item.description" class="line-clamp-4 hover:line-clamp-none transition-all"></p>
+                        </div>
+                        
+                        <div class="mt-auto pt-4 border-t border-gray-100 dark:border-slate-700">
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">重點辨識/特徵</h4>
+                            <ul class="space-y-1">
+                                <template x-for="point in item.points" :key="point">
+                                    <li class="flex items-start text-sm gap-2">
+                                        <i class="fa-solid fa-check text-green-500 mt-1 text-xs"></i>
+                                        <span x-text="point"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div x-show="filteredItems.length === 0" x-cloak class="text-center py-20">
+            <i class="fa-solid fa-magnifying-glass text-4xl text-gray-300 mb-4"></i>
+            <p class="text-xl text-gray-500">沒有找到相關資料，請嘗試其他關鍵字。</p>
+        </div>
+    </main>
+
+    <footer class="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                 <i class="fa-solid fa-book-open text-strawberry-600 text-3xl"></i>
+            </div>
+            <p class="text-gray-900 dark:text-white font-bold mb-2">行政院農業委員會苗栗區農業改良場</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                資料來源：草莓重要病蟲害辨識指南 (2020)
+            </p>
+            <div class="text-xs text-gray-400">
+                <p>地址：苗栗縣公館鄉館南村261號 | 電話：(037)222111</p>
+                <p class="mt-2">GPN: 1010901503 | ISBN: 978-986-5449-37-7</p>
+            </div>
+        </div>
+    </footer>
+
+    <button @click="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-6 right-6 p-3 bg-strawberry-600 text-white rounded-full shadow-lg hover:bg-strawberry-700 transition-all z-50 opacity-80 hover:opacity-100">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+        function appData() {
+            return {
+                searchQuery: '',
+                activeCategory: 'all',
+                theme: 'system', // light, dark, system
+                categories: [
+                    { id: 'all', name: '全部顯示' },
+                    { id: '病害', name: '重要病害' },
+                    { id: '蟲害', name: '重要蟲害' },
+                    { id: '品種', name: '品種介紹' },
+                    { id: '管理', name: '栽培與IPM' }
+                ],
+                
+                // Content parsed from the PDF
+                items: [
+                    {
+                        title: '炭疽病',
+                        englishName: 'Anthracnose',
+                        category: '病害',
+                        icon: 'fa-solid fa-bacteria',
+                        description: '好發於7-8月高溫多雨期。可感染果實、走莖、葉片及莖冠基部。初期產生紫紅色小斑，後擴大褐化凹陷。',
+                        points: [
+                            '高濕下產生橘紅色分生孢子堆',
+                            '葉片黑褐色圓形病斑',
+                            '冠部切開可見紅褐色壞疽',
+                            '藉雨水飛濺傳播'
+                        ]
+                    },
+                    {
+                        title: '萎凋病',
+                        englishName: 'Fusarium wilt',
+                        category: '病害',
+                        icon: 'fa-solid fa-plant-wilt',
+                        description: '葉片呈現大小葉及黃化，感染初期冠部呈淡粉紅色。病原菌可經由維管束系統性傳播，常藉由種苗傳給子代。',
+                        points: [
+                            '葉片黃化、全株枯死',
+                            '冠部縱切呈褐化',
+                            '根系呈現黑褐化',
+                            '病菌可於土壤殘存'
+                        ]
+                    },
+                    {
+                        title: '白粉病',
+                        englishName: 'Powdery mildew',
+                        category: '病害',
+                        icon: 'fa-solid fa-snowflake',
+                        description: '平地12月上旬起發生。危害葉片、嫩莖、花、果實。初期葉背產生白色粉末狀孢子，嚴重時布滿菌絲，葉緣向上捲曲。',
+                        points: [
+                            '葉背白色粉末狀孢子',
+                            '罹病葉緣向上捲曲',
+                            '後期出現紫紅色病斑',
+                            '影響果實品質'
+                        ]
+                    },
+                    {
+                        title: '灰黴病',
+                        englishName: 'Gray mold',
+                        category: '病害',
+                        icon: 'fa-solid fa-cloud-rain',
+                        description: '低溫高濕(陰雨連綿)時易發生。主要危害果實，發病初期萼片轉為紫紅色，後產生大量灰色黴狀物，果實軟化腐敗。',
+                        points: [
+                            '萼片轉紫紅色',
+                            '果實著生灰色黴狀物',
+                            '果實軟化腐敗',
+                            '好發於低溫高濕'
+                        ]
+                    },
+                    {
+                        title: '果腐病',
+                        englishName: 'Fruit rot',
+                        category: '病害',
+                        icon: 'fa-solid fa-apple-whole',
+                        description: '果實受感染後呈現水浸狀。冬季若雨水豐沛，自12月中下旬可與灰黴病同時發生。',
+                        points: [
+                            '果實呈現水浸狀',
+                            '12月中下旬發生',
+                            '常與灰黴病併發'
+                        ]
+                    },
+                    {
+                        title: '葉枯病',
+                        englishName: 'Leaf blight',
+                        category: '病害',
+                        icon: 'fa-brands fa-canadian-maple-leaf',
+                        description: '感染冠部後組織褐化。葉片初期為圓狀病斑，隨水擴大造成葉枯。成熟葉轉紫至紫紅色。',
+                        points: [
+                            '葉片圓狀病斑擴大',
+                            '高濕產生黑色環狀孢子堆',
+                            '成熟葉轉紫色',
+                            '果實凹陷腐壞'
+                        ]
+                    },
+                    {
+                        title: '角斑病',
+                        englishName: 'Angular leaf spot',
+                        category: '病害',
+                        icon: 'fa-solid fa-shapes',
+                        description: '主要危害成熟葉。初期葉下表皮出現被葉脈侷限的水浸狀角狀病斑(透光觀察透明狀)。',
+                        points: [
+                            '水浸狀角狀病斑',
+                            '病斑乳白色黏稠菌體溢出',
+                            '藉露水、雨水飛濺傳播'
+                        ]
+                    },
+                    {
+                        title: '葉芽線蟲',
+                        englishName: 'Foliar nematode',
+                        category: '蟲害',
+                        icon: 'fa-solid fa-worm',
+                        description: '寄生於嫩芽內，侵害生長點。導致葉片皺縮畸形、植株矮化。常誘發不定芽生長。',
+                        points: [
+                            '葉片皺縮畸形',
+                            '植株矮化',
+                            '只開一次花後停止生長'
+                        ]
+                    },
+                    {
+                        title: '葉部薊馬 / 花薊馬',
+                        englishName: 'Thrips',
+                        category: '蟲害',
+                        icon: 'fa-solid fa-bug',
+                        description: '銼吸式口器危害。葉部受害葉脈黑褐化；花器受害造成果實畸形、硬化、呈現銹色。',
+                        points: [
+                            '葉脈黑褐化',
+                            '果實畸形、銹色',
+                            '影響商品價值'
+                        ]
+                    },
+                    {
+                        title: '斜紋夜盜蟲',
+                        englishName: 'Tobacco cutworm',
+                        category: '蟲害',
+                        icon: 'fa-solid fa-locust',
+                        description: '晝伏夜出，雜食性。幼蟲群棲取食葉部、心梢或花器。10-11月發生密度最高。',
+                        points: [
+                            '晝伏夜出',
+                            '食害葉片及果實',
+                            '幼蟲具群棲性'
+                        ]
+                    },
+                    {
+                        title: '二點葉蟎 (紅蜘蛛)',
+                        englishName: 'Two-spotted spider mite',
+                        category: '蟲害',
+                        icon: 'fa-solid fa-spider',
+                        description: '群集葉背危害，葉片產生細小黃斑，嚴重時全葉枯萎並出現蜘蛛網狀物。',
+                        points: [
+                            '葉片細小黃斑',
+                            '葉片焦枯落葉',
+                            '出現蜘蛛網狀物'
+                        ]
+                    },
+                    {
+                        title: '苗栗1號 (戀香)',
+                        englishName: 'Miaoli No. 1',
+                        category: '品種',
+                        icon: 'fa-solid fa-certificate',
+                        description: '2019年育成。主要特點：果形錐形、大果、甜度高。氣溫30°C以上避免定植。',
+                        points: [
+                            '果實蒂頭處留白',
+                            '果肉紅色',
+                            '花瓣間分開',
+                            '磷鉀肥需求高於豐香'
+                        ]
+                    },
+                    {
+                        title: '土壤肥培管理',
+                        englishName: 'Soil & Fertilizer',
+                        category: '管理',
+                        icon: 'fa-solid fa-flask',
+                        description: '整地施肥前一個月採樣。目標產量2公噸推薦量：氮17.9kg、磷酐14.5kg、氧化鉀16.9kg。',
+                        points: [
+                            '採樣深度0-15公分',
+                            '定植前淹水/曬田各1個月',
+                            '基肥與追肥適度分配'
+                        ]
+                    },
+                    {
+                        title: 'IPM 綜合管理',
+                        englishName: 'Integrated Pest Management',
+                        category: '管理',
+                        icon: 'fa-solid fa-clipboard-check',
+                        description: '執行IPM六大步驟：監視調查、診斷鑑定、監測、防治選擇、效果評估、教育訓練。',
+                        points: [
+                            '母株健康管理',
+                            '清園徹底',
+                            '預防勝於治療'
+                        ]
+                    }
+                ],
+
+                // Helpers
+                get filteredItems() {
+                    return this.items.filter(item => {
+                        const matchesSearch = (item.title + item.description + item.englishName).toLowerCase().includes(this.searchQuery.toLowerCase());
+                        const matchesCategory = this.activeCategory === 'all' || item.category === this.activeCategory || (this.activeCategory === '管理' && (item.category === '品種' || item.category === '管理')); // Group Cultivation under management for UI simplicity if needed, or keep strict.
+                        
+                        if(this.activeCategory === '管理') {
+                             return matchesSearch && (item.category === '管理');
+                        }
+                         if(this.activeCategory === '品種') {
+                             return matchesSearch && (item.category === '品種');
+                        }
+                        
+                        return matchesSearch && matchesCategory;
+                    });
+                },
+                
+                getCategoryName(id) {
+                    return this.categories.find(c => c.id === id)?.name || '列表';
+                },
+
+                getCategoryColor(category) {
+                    switch(category) {
+                        case '病害': return 'bg-red-500';
+                        case '蟲害': return 'bg-orange-500';
+                        case '品種': return 'bg-purple-500';
+                        case '管理': return 'bg-green-600';
+                        default: return 'bg-gray-500';
+                    }
+                },
+
+                getCategoryBadgeClass(category) {
+                     switch(category) {
+                        case '病害': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+                        case '蟲害': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+                        case '品種': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+                        case '管理': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+                        default: return 'bg-gray-100 text-gray-800';
+                    }
+                },
+
+                get themeIcon() {
+                    if (this.theme === 'light') return 'fa-sun';
+                    if (this.theme === 'dark') return 'fa-moon';
+                    return 'fa-desktop';
+                },
+
+                initTheme() {
+                    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                    this.theme = localStorage.theme || 'system';
+                },
+
+                setTheme(val) {
+                    this.theme = val;
+                    if (val === 'system') {
+                        localStorage.removeItem('theme');
+                        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    } else if (val === 'dark') {
+                        localStorage.theme = 'dark';
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        localStorage.theme = 'light';
+                        document.documentElement.classList.remove('dark');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

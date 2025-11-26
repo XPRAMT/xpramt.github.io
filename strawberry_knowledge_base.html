@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>草莓知識百科資料庫</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        strawberry: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* 雙向滑桿樣式核心 */
+        .range-slider-container {
+            position: relative;
+            width: 100%;
+            height: 24px;
+        }
+        .range-slider-input {
+            position: absolute;
+            pointer-events: none;
+            -webkit-appearance: none;
+            z-index: 20;
+            height: 24px;
+            width: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .range-slider-input::-webkit-slider-thumb {
+            pointer-events: auto;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e11d48;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            margin-top: 2px;
+        }
+        .range-slider-input::-moz-range-thumb {
+            pointer-events: auto;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e11d48;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .range-track-bg {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            left: 0; right: 0;
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            z-index: 10;
+        }
+        .dark .range-track-bg { background-color: #475569; }
+        
+        .range-track-fill {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            height: 6px;
+            background-color: #e11d48;
+            border-radius: 3px;
+            z-index: 11;
+        }
+        
+        input[type=range] {
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+    </style>
+
+    <script>
+        function appData() {
+            return {
+                rawData: [{"id": "var_苗栗1號 (戀香)", "category": "品種", "title": "苗栗1號 (戀香)", "description": "苗栗場從2014年開始以草苺品種「豐香」為親本進行改良，進行3年的適應力篩選，及3年的果實特性評估，歷經6年的育種程序，於2019年育成推出草苺「苗栗1號-戀香」(品種權證字第A02454)。<br>戀香是第一個自產區育成的品種，具有種苗繁殖容易、株形直立好管理、果實大而美形、糖度高食味優、香氣特殊等特性", "tags": {"顏色": "紅色", "來源": "台灣"}, "sugar": 15, "images": ["https://kmwebsys.moa.gov.tw/files/subject_WS/42073/A02_1.jpg"], "details": [{"label": "糖度", "value": "約 15 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實卵形，蒂頭處留白; 花瓣間分開; 植株直立通風好", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度極高（約14-16度，最高可達16.5度）。果肉紅色，具特殊濃郁香氣，口感紮實甜美，被譽為「草莓界的香奈兒」。", "icon": "fa-solid fa-utensils"}], "sources": ["https://kmweb.moa.gov.tw/subject/subject.php?id=42073"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_桃園一號 (豐香)", "category": "品種", "title": "桃園一號 (豐香)", "description": "", "tags": {"顏色": "紅色", "來源": "台灣"}, "sugar": 0, "images": [], "details": [], "sources": [], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_桃園四號 (紅冠)", "category": "品種", "title": "桃園四號 (紅冠)", "description": "桃園區農業改良場歷經 11 年育成之草苺新品種桃園 4 號 - 紅冠 ， 具早生及果實碩大等優良特性，產期可提早至 11 月上旬 ， 目前該品種已非專屬授權予新竹縣關西鎮農會，已開始推廣農友栽種，今年市面上就可以品嚐到此又大又甜的新品種草苺。<br>桃園區農業改良場表示，一般草苺產季在 12 月至隔年 4 月間，由於草苺新品種桃園 4 號具有早生的優良特性，因此 ， 採收期可較現有品種提早 14 天左右，可以搶攻首波草苺商機，該新品種還具果實碩大、植株生長勢強，株型直立，夏季育苗容易且倍數高、風味佳、果實硬度高及產量高等優點，非常適合推廣作為台灣北部地區觀光草苺園栽培。", "tags": {"顏色": "紅色", "來源": "台灣"}, "sugar": 9.5, "images": ["https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC_0498.JPG", "https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC00123.JPG"], "details": [{"label": "糖度", "value": "約 9.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實碩大，呈不規則扇形或圓錐形; 畸形果機率略高", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約9-10度。口感軟硬度中等，酸甜適中，雖然果大但中心空洞較少，帶有清香。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.tydares.gov.tw/theme_data.php?theme=news&sub_theme=agri&id=4452"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_天來一號 (蘋果草莓)", "category": "品種", "title": "天來一號 (蘋果草莓)", "description": "由農友呂天來育成 (據傳可能源自日本品種選育)。因口感脆硬且帶有蘋果香氣，俗稱「蘋果草莓」或「內湖一號」。常見於台北內湖地區。", "tags": {"顏色": "紅色", "來源": "台灣"}, "sugar": 10.5, "images": [], "details": [{"label": "糖度", "value": "約 10.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實為圓錐形，外表鮮紅柔嫩，形狀有時似蘋果", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約10-11度。質地較為硬脆、口感紮實，帶有淡淡蘋果香氣，酸甜適中。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.agriharvest.tw/archives/122588", "https://fae.moa.gov.tw/map/food_item.php?type=AS01&id=114"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_香野", "category": "品種", "title": "香野", "description": "日本三重縣研發育成。具有生長勢強、早生、對炭疽病抗性強等特點。", "tags": {"顏色": "紅色", "來源": "日本"}, "sugar": 10.5, "images": [], "details": [{"label": "糖度", "value": "約 10.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果形圓錐，果皮呈現亮麗的橙紅色", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約10-11度。果肉結實，酸度低甜度高，含有豐富的芳樟醇(Linalool)香氣，口感清脆。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.kawacake.com/blog/posts/strawberry", "https://www.letsgojp.com/archives/306064/"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_章姬 (奶油章姬)", "category": "品種", "title": "章姬 (奶油章姬)", "description": "日本靜岡縣育成 (久能早生×女峰)。因果肉軟嫩多汁，口感似奶油，故台灣市面常稱為「奶油草莓」。", "tags": {"顏色": "紅色", "來源": "日本"}, "sugar": 12.5, "images": [], "details": [{"label": "糖度", "value": "約 12.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果形細長圓錐狀，果皮粉紅色", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約10-15度。果肉細緻軟嫩，水分多，酸度極低，甜味明顯，但不耐儲運。", "icon": "fa-solid fa-utensils"}], "sources": ["https://jw-webmagazine.com/zh-tw/%E6%97%A5%E6%9C%AC%E8%8D%89%E8%8E%93%E6%8C%91%E9%81%B8%E6%8C%87%E5%8D%97%EF%BC%8C%E5%BE%9E%E7%94%A2%E5%9C%B0%E5%93%81%E7%A8%AE%E5%88%B0%E6%8C%91%E9%81%B8%E7%AB%85%E9%96%80/", "https://www.agriharvest.tw/archives/122588"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_甘王", "category": "品種", "title": "甘王", "description": "日本福岡縣代表品種。名稱來自「紅(Akai)、圓(Marui)、大(Ookii)、好(Umai)」的首字縮寫。", "tags": {"顏色": "紅色", "來源": "日本", "特色": "大果"}, "sugar": 11, "images": [], "details": [{"label": "糖度", "value": "約 11 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實碩大，外型圓整渾厚，果皮深紅光亮", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "平均糖度11度以上。果肉紮實多汁，糖酸比平衡極佳，風味濃郁。", "icon": "fa-solid fa-utensils"}], "sources": ["https://greenbox.tw/Products/ItemDetail/64576"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_古都華", "category": "品種", "title": "古都華", "description": "日本奈良縣育成。以其如紅寶石般的深紅色澤與高雅風味聞名，產量較少。", "tags": {"顏色": "紅色", "來源": "日本"}, "sugar": 13.5, "images": [], "details": [{"label": "糖度", "value": "約 13.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果皮呈現深紅色(亮澤感強)，果形整齊", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約12-15度。糖度與酸度皆高，風味層次豐富濃厚，果肉紮實。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.harpersbazaar.com/tw/beauty/dietary-therapy/g62733136/japan-strawberry/"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_おいC", "category": "品種", "title": "おいC", "description": "日本農研機構育成。主打高維生素C含量 (約一般草莓的1.3-1.6倍)。", "tags": {"顏色": "紅色", "來源": "日本"}, "sugar": 12.5, "images": [], "details": [{"label": "糖度", "value": "約 12.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實大，果皮深紅色，具有光澤", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約10-15度。果肉相當紮實，硬度高，耐儲運，甜度高帶適度酸味，有清新水果香氣。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.letsgojp.cn/archives/306064/"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_淡雪", "category": "品種", "title": "淡雪", "description": "日本鹿兒島縣育成。著名的白草莓品種之一，因色澤如淡淡的雪而得名。", "tags": {"顏色": "粉紅", "來源": "日本"}, "sugar": 13.5, "images": [], "details": [{"label": "糖度", "value": "約 13.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果皮呈現淡粉紅色(櫻花粉)，種子紅色", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約12-15度。酸度極低，甜味清爽，帶有獨特的優雅香氣。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.foodinjapan.org/zh/%E6%97%A5%E6%9C%AC/%E6%B7%A1%E9%9B%AA%E8%8D%89%E8%8E%93/"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_雪兔", "category": "品種", "title": "雪兔", "description": "日本佐賀縣唐津市育成。屬於白草莓中的大果品種。", "tags": {"顏色": "白色", "來源": "日本"}, "sugar": 13.5, "images": [], "details": [{"label": "糖度", "value": "約 13.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果皮雪白，種子成熟時轉紅，外觀對比強烈", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約12-15度。果肉白色細緻，幾乎無酸味，帶有淡淡的奶香或水蜜桃/奇異果香。", "icon": "fa-solid fa-utensils"}], "sources": ["https://tw.bid.yahoo.com/item/101631068984", "https://www.agriharvest.tw/archives/122588"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_天使AE", "category": "品種", "title": "天使AE", "description": "日本品種 (Angel Eight)。強調家庭園藝也能容易種植的白草莓品種。", "tags": {"顏色": "白色", "來源": "日本"}, "sugar": 12, "images": [], "details": [{"label": "糖度", "value": "約 12 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實圓錐形，果皮乳白至微粉，種子紅色", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約11-13度。果肉白色，口感多汁細膩，甜度高酸度低，有香草/牛奶/哈密瓜香氣。", "icon": "fa-solid fa-utensils"}], "sources": ["https://www.strawberry31.com.tw/products_detail/71", "https://www.agriharvest.tw/archives/122588"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_白乙女", "category": "品種", "title": "白乙女", "description": "日本美好種苗(Miyoshi)育成。商品名為「白乙女」，亦有稱為「白雪姬」或相關系列。", "tags": {"顏色": "白色", "來源": "日本"}, "sugar": 0, "images": [], "details": [{"label": "外觀", "value": "果實顏色偏白，帶有淡淡粉暈，果粒大", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "甜度高，香氣非常濃郁，具有類似水蜜桃的特殊風味與牛奶般的醇厚口感。", "icon": "fa-solid fa-utensils"}], "sources": ["https://fresh-food.tochigipower.com/zh_TW/strawberry/"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_妙香7號", "category": "品種", "title": "妙香7號", "description": "中國山東農業大學以「紅顏」與「甜查理」雜交育成。暖地草莓品種，抗逆性強。", "tags": {"顏色": "紅色", "來源": "中國"}, "sugar": 10, "images": [], "details": [{"label": "糖度", "value": "約 10 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實圓錐形，果面鮮紅富光澤，果柄長", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約9.9% (近10度)。果肉鮮紅細膩，香味濃郁，硬度高耐運輸。", "icon": "fa-solid fa-utensils"}], "sources": ["https://shopee.tw/search?keyword=妙香7號"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_帝王紅", "category": "品種", "title": "帝王紅", "description": "台灣苗圃常見品種。強調耐熱性與抗病性優於一般日系品種，適合台灣平地氣候。", "tags": {"顏色": "紅色", "來源": "台灣"}, "sugar": 0, "images": [], "details": [{"label": "外觀", "value": "果實碩大，顏色鮮紅", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "甜度佳。果實口感Q彈，肉質細膩，具有濃郁的傳統草莓香氣，多汁。", "icon": "fa-solid fa-utensils"}], "sources": ["https://shopee.tw/search?keyword=帝王紅草莓"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_皇隆", "category": "品種", "title": "皇隆", "description": "台灣選育之巨大果品種。以果實巨大、生長強健著稱，又稱「巨無霸」系列。", "tags": {"顏色": "紅色", "來源": "台灣", "特色": "大果"}, "sugar": 0, "images": [], "details": [{"label": "外觀", "value": "果型巨大，有時呈現扇形或不規則狀", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "果肉紮實，甜香味濃厚，雖果大但中心空洞較少，風味足。", "icon": "fa-solid fa-utensils"}], "sources": ["https://shopee.tw/search?keyword=皇隆草莓"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_錦香", "category": "品種", "title": "錦香", "description": "台灣常見栽培品種。具有生長勢強、產量穩定等特性。為取代「豐香」而選育。", "tags": {"顏色": "紅色", "來源": "台灣"}, "sugar": 12, "images": [], "details": [{"label": "糖度", "value": "約 12 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "果實外形較尖長，色澤鮮紅", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度可達12度。口感爽實，層次豐富，帶有特殊果香，抗病性較豐香強。", "icon": "fa-solid fa-utensils"}], "sources": ["https://shopee.tw/search?keyword=錦香草莓"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "var_奶油真飽", "category": "品種", "title": "奶油真飽", "description": "台灣苗圃推廣品種。耐熱性較高，針對台灣氣候選育或引進改良。", "tags": {"顏色": "紅色", "來源": "台灣", "特色": "大果"}, "sugar": 11.5, "images": [], "details": [{"label": "糖度", "value": "約 11.5 度 (Brix)", "icon": "fa-solid fa-droplet"}, {"label": "外觀", "value": "屬於大果品系，果實飽滿，果皮成熟後呈粉紅或淡玫瑰色", "icon": "fa-regular fa-eye"}, {"label": "口感", "value": "糖度約10-13度。果肉紮實細膩，帶有特殊的鳳梨香氣或濃郁奶香，口感順滑。", "icon": "fa-solid fa-utensils"}], "sources": ["https://news.ymt.com/encyclopedia/17634583683380655840"], "icon_fallback": "fa-solid fa-seedling"}, {"id": "pest_炭疽病", "category": "病蟲害", "title": "炭疽病", "description": "好發於7-8月高溫多雨期。可感染果實、走莖、葉片及莖冠基部。初期產生紫紅色小斑，後擴大褐化凹陷。", "tags": {"類型": "真菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "高濕下產生橘紅色分生孢子堆; 葉片黑褐色圓形病斑; 冠部切開可見紅褐色壞疽; 藉雨水飛濺傳播", "icon": "fa-solid fa-shield-virus"}], "sources": ["https://www.aphia.gov.tw"], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_萎凋病", "category": "病蟲害", "title": "萎凋病", "description": "葉片呈現大小葉及黃化，感染初期冠部呈淡粉紅色。病原菌可經由維管束系統性傳播，常藉由種苗傳給子代。", "tags": {"類型": "真菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "葉片黃化、全株枯死; 冠部縱切呈褐化; 根系呈現黑褐化; 病菌可於土壤殘存", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_白粉病", "category": "病蟲害", "title": "白粉病", "description": "平地12月上旬起發生。危害葉片、嫩莖、花、果實。初期葉背產生白色粉末狀孢子，嚴重時布滿菌絲，葉緣向上捲曲。", "tags": {"類型": "真菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "葉背白色粉末狀孢子; 罹病葉緣向上捲曲; 後期出現紫紅色病斑; 影響果實品質", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_灰黴病", "category": "病蟲害", "title": "灰黴病", "description": "低溫高濕(陰雨連綿)時易發生。主要危害果實，發病初期萼片轉為紫紅色，後產生大量灰色黴狀物，果實軟化腐敗。", "tags": {"類型": "真菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "萼片轉紫紅色; 果實著生灰色黴狀物; 果實軟化腐敗; 好發於低溫高濕", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_果腐病", "category": "病蟲害", "title": "果腐病", "description": "果實受感染後呈現水浸狀。冬季若雨水豐沛，自12月中下旬可與灰黴病同時發生。", "tags": {"類型": "真菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "果實呈現水浸狀; 12月中下旬發生; 常與灰黴病併發", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_葉枯病", "category": "病蟲害", "title": "葉枯病", "description": "感染冠部後組織褐化。葉片初期為圓狀病斑，隨水擴大造成葉枯。成熟葉轉紫至紫紅色。", "tags": {"類型": "真菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "葉片圓狀病斑擴大; 高濕產生黑色環狀孢子堆; 成熟葉轉紫色; 果實凹陷腐壞", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_角斑病", "category": "病蟲害", "title": "角斑病", "description": "主要危害成熟葉。初期葉下表皮出現被葉脈侷限的水浸狀角狀病斑(透光觀察透明狀)。", "tags": {"類型": "細菌"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "水浸狀角狀病斑; 病斑乳白色黏稠菌體溢出; 藉露水、雨水飛濺傳播", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bacteria"}, {"id": "pest_葉芽線蟲", "category": "病蟲害", "title": "葉芽線蟲", "description": "寄生於嫩芽內，侵害生長點。導致葉片皺縮畸形、植株矮化。常誘發不定芽生長。", "tags": {"類型": "蟲"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "葉片皺縮畸形; 植株矮化; 只開一次花後停止生長", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bug"}, {"id": "pest_葉部薊馬 / 花薊馬", "category": "病蟲害", "title": "葉部薊馬 / 花薊馬", "description": "銼吸式口器危害。葉部受害葉脈黑褐化；花器受害造成果實畸形、硬化、呈現銹色。", "tags": {"類型": "蟲"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "葉脈黑褐化; 果實畸形、銹色; 影響商品價值", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bug"}, {"id": "pest_斜紋夜盜蟲", "category": "病蟲害", "title": "斜紋夜盜蟲", "description": "晝伏夜出，雜食性。幼蟲群棲取食葉部、心梢或花器。10-11月發生密度最高。", "tags": {"類型": "蟲"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "晝伏夜出; 食害葉片及果實; 幼蟲具群棲性", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bug"}, {"id": "pest_二點葉蟎", "category": "病蟲害", "title": "二點葉蟎", "description": "群集葉背危害，葉片產生細小黃斑，嚴重時全葉枯萎並出現蜘蛛網狀物。", "tags": {"類型": "蟲"}, "sugar": 0, "images": [], "details": [{"label": "防治重點", "value": "葉片細小黃斑; 葉片焦枯落葉; 出現蜘蛛網狀物", "icon": "fa-solid fa-shield-virus"}], "sources": [], "icon_fallback": "fa-solid fa-bug"}, {"id": "def_缺鈣", "category": "缺素", "title": "缺鈣", "description": "頂燒(Tip burn)，新葉葉尖褐化乾枯，花萼焦枯。果實硬度增加但發育受阻。", "tags": {"元素": "鈣"}, "sugar": 0, "images": [], "details": [{"label": "缺乏元素", "value": "鈣", "icon": "fa-solid fa-flask"}], "sources": ["https://www.dfs168.com/agricultural/article-50.html"], "icon_fallback": "fa-solid fa-leaf"}, {"id": "def_缺氮 ", "category": "缺素", "title": "缺氮 ", "description": "老葉全葉均勻黃化（非斑駁），植株矮小，生長勢弱。新葉變小。", "tags": {"元素": "氮"}, "sugar": 0, "images": [], "details": [{"label": "缺乏元素", "value": "氮", "icon": "fa-solid fa-flask"}], "sources": ["https://www.cnhnb.com/xt/article-111315.html"], "icon_fallback": "fa-solid fa-leaf"}, {"id": "def_缺磷", "category": "缺素", "title": "缺磷", "description": "老葉顏色變深綠，嚴重時呈現紫紅色或青銅色金屬光澤。植株發育不良，花芽分化減少。", "tags": {"元素": "磷"}, "sugar": 0, "images": [], "details": [{"label": "缺乏元素", "value": "磷", "icon": "fa-solid fa-flask"}], "sources": ["https://agri.microgreen.com.tw/2014/05/blog-post_15.html"], "icon_fallback": "fa-solid fa-leaf"}, {"id": "def_缺鉀", "category": "缺素", "title": "缺鉀", "description": "老葉葉緣焦枯褐化（像燒焦一樣），葉片有時捲曲。果實甜度與風味不佳，色澤變淡。", "tags": {"元素": "鉀"}, "sugar": 0, "images": [], "details": [{"label": "缺乏元素", "value": "鉀", "icon": "fa-solid fa-flask"}], "sources": ["https://www.cnhnb.com/xt/article-111315.html"], "icon_fallback": "fa-solid fa-leaf"}, {"id": "def_缺鎂", "category": "缺素", "title": "缺鎂", "description": "老葉葉脈間黃化，但葉脈保持綠色（網狀脈）。葉緣可能變紅。", "tags": {"元素": "鎂"}, "sugar": 0, "images": [], "details": [{"label": "缺乏元素", "value": "鎂", "icon": "fa-solid fa-flask"}], "sources": ["https://agri.microgreen.com.tw/2014/05/blog-post_15.html"], "icon_fallback": "fa-solid fa-leaf"}, {"id": "def_缺硼", "category": "缺素", "title": "缺硼", "description": "新葉皺縮畸形，葉緣焦枯。果實出現「蟾蜍皮」狀（表皮木栓化龜裂），果形不正，果肉空心。", "tags": {"元素": "硼"}, "sugar": 0, "images": [], "details": [{"label": "缺乏元素", "value": "硼", "icon": "fa-solid fa-flask"}], "sources": ["https://www.aphia.gov.tw/publish/plant_protect_pic_15/P_pdf/05-03.pdf"], "icon_fallback": "fa-solid fa-leaf"}],
+                searchQuery: '',
+                activeCategory: 'all',
+                activeTags: [],
+                
+                minSugar: 0,
+                maxSugar: 20,
+                rangeMax: 20,
+
+                theme: 'system',
+                showScrollTop: false,
+                
+                categories: [
+                    { id: 'all', name: '全部', icon: 'fa-solid fa-layer-group' },
+                    { id: '品種', name: '品種圖鑑', icon: 'fa-solid fa-seedling' },
+                    { id: '病蟲害', name: '病蟲害防治', icon: 'fa-solid fa-shield-virus' },
+                    { id: '缺素', name: '營養缺素', icon: 'fa-solid fa-flask' }
+                ],
+
+                init() {
+                    window.addEventListener('scroll', () => {
+                        this.showScrollTop = window.scrollY > 300;
+                    });
+                },
+                
+                validateRange() {
+                    if (this.minSugar > this.maxSugar) {
+                        const temp = this.minSugar;
+                        this.minSugar = this.maxSugar;
+                        this.maxSugar = temp;
+                    }
+                },
+                
+                get minPercent() {
+                    return (Math.min(this.minSugar, this.maxSugar) / this.rangeMax) * 100 + '%';
+                },
+                get maxPercent() {
+                    return (Math.max(this.minSugar, this.maxSugar) / this.rangeMax) * 100 + '%';
+                },
+                get fillWidth() {
+                    let min = Math.min(this.minSugar, this.maxSugar);
+                    let max = Math.max(this.minSugar, this.maxSugar);
+                    return ((max - min) / this.rangeMax) * 100 + '%';
+                },
+
+                get filteredItems() {
+                    if (!this.rawData) return [];
+                    return this.rawData.filter(item => {
+                        const matchCat = this.activeCategory === 'all' || item.category === this.activeCategory;
+                        
+                        const q = (this.searchQuery || '').toLowerCase();
+                        const matchSearch = item.title.toLowerCase().includes(q) || 
+                                          (item.description && item.description.toLowerCase().includes(q)) ||
+                                          Object.values(item.tags).some(v => v && v.toLowerCase().includes(q));
+                        
+                        let matchTags = true;
+                        if (this.activeTags.length > 0) {
+                            const itemTagValues = Object.values(item.tags);
+                            matchTags = this.activeTags.every(tag => itemTagValues.includes(tag));
+                        }
+
+                        let matchSugar = true;
+                        if (this.activeCategory === '品種' || this.activeCategory === 'all') {
+                            const s = item.sugar;
+                            const currentMin = Math.min(this.minSugar, this.maxSugar);
+                            const currentMax = Math.max(this.minSugar, this.maxSugar);
+
+                            if (s === 0) {
+                                matchSugar = (currentMin === 0);
+                            } else {
+                                matchSugar = s >= currentMin && s <= currentMax;
+                            }
+                        }
+
+                        return matchCat && matchSearch && matchTags && matchSugar;
+                    });
+                },
+
+                get availableTags() {
+                    const tags = new Set();
+                    if (this.rawData) {
+                        this.rawData.forEach(item => {
+                             if (this.activeCategory === 'all' || item.category === this.activeCategory) {
+                                 Object.values(item.tags).forEach(val => val && tags.add(val));
+                             }
+                        });
+                    }
+                    return Array.from(tags).sort();
+                },
+
+                getCount(catId) {
+                    if (!this.rawData) return 0;
+                    if (catId === 'all') return this.rawData.length;
+                    return this.rawData.filter(i => i.category === catId).length;
+                },
+
+                toggleTagFilter(tag) {
+                    if (this.activeTags.includes(tag)) {
+                        this.activeTags = this.activeTags.filter(t => t !== tag);
+                    } else {
+                        this.activeTags.push(tag);
+                    }
+                },
+
+                resetFilters() {
+                    this.searchQuery = '';
+                    this.activeCategory = 'all';
+                    this.activeTags = [];
+                    this.minSugar = 0;
+                    this.maxSugar = 20;
+                },
+
+                getCategoryBadgeClass(cat) {
+                    switch(cat) {
+                        case '品種': return 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200';
+                        case '病蟲害': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+                        case '缺素': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+                        default: return 'bg-gray-100 text-gray-800';
+                    }
+                },
+                
+                get themeIcon() {
+                    if (this.theme === 'light') return 'fa-sun';
+                    if (this.theme === 'dark') return 'fa-moon';
+                    return 'fa-desktop';
+                },
+                initTheme() {
+                    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                    this.theme = localStorage.theme || 'system';
+                },
+                setTheme(val) {
+                    this.theme = val;
+                    if (val === 'system') {
+                        localStorage.removeItem('theme');
+                        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    } else if (val === 'dark') {
+                        localStorage.theme = 'dark';
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        localStorage.theme = 'light';
+                        document.documentElement.classList.remove('dark');
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 text-slate-900 dark:bg-black dark:text-gray-100 transition-colors duration-300 min-h-screen"
+      x-data="appData()" 
+      x-init="initTheme()">
+
+    <nav class="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center h-auto md:h-16 py-3 md:py-0 gap-4 md:gap-0">
+                <div class="flex items-center gap-3 cursor-pointer" @click="resetFilters()">
+                    <div class="bg-strawberry-100 dark:bg-strawberry-900 p-2 rounded-full">
+                        <i class="fa-solid fa-book-open text-strawberry-600 dark:text-strawberry-300 text-xl"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">
+                        草莓知識<span class="text-strawberry-600">百科</span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-4 w-full md:w-auto justify-end">
+                    <div class="relative w-full md:w-64">
+                        <input type="text" x-model="searchQuery" placeholder="搜尋..." 
+                               class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-strawberry-500 focus:outline-none transition-all text-sm border border-transparent focus:bg-white dark:focus:bg-gray-900 border-gray-200 dark:border-gray-700">
+                        <i class="fa-solid fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                        <button x-show="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" @click.outside="open = false" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition">
+                            <i class="fa-solid" :class="themeIcon"></i>
+                        </button>
+                        <div x-show="open" x-transition class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 text-sm z-50">
+                            <button @click="setTheme('light')" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"><i class="fa-regular fa-sun text-yellow-500"></i> 亮色</button>
+                            <button @click="setTheme('dark')" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"><i class="fa-regular fa-moon text-indigo-400"></i> 暗色</button>
+                            <button @click="setTheme('system')" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2"><i class="fa-solid fa-desktop text-gray-500"></i> 系統</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div class="flex flex-wrap justify-center gap-3 mb-6 sticky top-20 md:top-20 z-40 py-2 bg-gray-50/95 dark:bg-black/95 backdrop-blur-sm">
+            <template x-for="cat in categories" :key="cat.id">
+                <button @click="activeCategory = cat.id"
+                        :class="activeCategory === cat.id ? 'bg-strawberry-600 text-white shadow-md transform scale-105' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'"
+                        class="px-5 py-2 rounded-full font-medium transition-all text-sm flex items-center gap-2">
+                    <i :class="cat.icon"></i>
+                    <span x-text="cat.name"></span>
+                    <span class="text-xs bg-white/20 px-1.5 py-0.5 rounded-full ml-1" x-text="getCount(cat.id)"></span>
+                </button>
+            </template>
+        </div>
+
+        <div class="mb-8 p-4 bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+            
+            <div x-show="activeCategory === 'all' || activeCategory === '品種'" class="mb-6 pb-6 border-b border-gray-100 dark:border-gray-800 px-2 md:px-8">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center">
+                        <i class="fa-solid fa-chart-simple mr-2 text-strawberry-500"></i>糖度篩選 (Brix)
+                    </span>
+                    <div class="text-xs bg-strawberry-50 dark:bg-strawberry-900/30 text-strawberry-700 dark:text-strawberry-300 px-3 py-1 rounded-full font-bold">
+                        <span x-text="Math.min(minSugar, maxSugar)"></span> - <span x-text="Math.max(minSugar, maxSugar)"></span> 度
+                    </div>
+                </div>
+                
+                <div class="range-slider-container mb-2">
+                    <div class="range-track-bg"></div>
+                    <div class="range-track-fill" 
+                         :style="'left: ' + minPercent + '; width: ' + fillWidth"></div>
+                    
+                    <input type="range" min="0" max="20" step="0.5" 
+                           x-model.number="minSugar" 
+                           @input="validateRange()"
+                           class="range-slider-input">
+                    
+                    <input type="range" min="0" max="20" step="0.5" 
+                           x-model.number="maxSugar"
+                           @input="validateRange()" 
+                           class="range-slider-input">
+                </div>
+                
+                <div class="flex justify-between text-xs text-gray-400 mt-2 px-1">
+                    <span>0</span>
+                    <span>5</span>
+                    <span>10</span>
+                    <span>15</span>
+                    <span>20</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 justify-center items-center" x-show="availableTags.length > 0">
+                <span class="text-sm text-gray-500 dark:text-gray-400 flex items-center mr-2"><i class="fa-solid fa-filter mr-1"></i> 特徵標籤:</span>
+                <template x-for="tag in availableTags" :key="tag">
+                    <button @click="toggleTagFilter(tag)"
+                            :class="activeTags.includes(tag) ? 'bg-gray-700 text-white dark:bg-gray-200 dark:text-gray-900' : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                            class="px-3 py-1 rounded-md text-xs font-medium transition-colors border border-transparent">
+                        <span x-text="tag"></span>
+                    </button>
+                </template>
+                <button x-show="activeTags.length > 0 || minSugar > 0 || maxSugar < 20" @click="resetFilters()" class="text-xs text-red-500 hover:underline px-2 ml-2">
+                    <i class="fa-solid fa-rotate-left mr-1"></i>重置
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <template x-for="item in filteredItems" :key="item.id">
+                <div class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700 card-hover flex flex-col h-full group">
+                    
+                    <div class="relative w-full h-48 bg-gray-100 dark:bg-black flex items-center justify-center overflow-hidden" 
+                         x-data="{ currentImgIdx: 0 }">
+                        <template x-if="item.images && item.images.length > 0">
+                            <div class="w-full h-full relative">
+                                <template x-for="(img, idx) in item.images" :key="idx">
+                                    <img :src="img" 
+                                         x-show="currentImgIdx === idx"
+                                         x-transition:enter="transition opacity duration-300"
+                                         x-transition:enter-start="opacity-0"
+                                         x-transition:enter-end="opacity-100"
+                                         class="w-full h-full object-cover absolute top-0 left-0 cursor-pointer"
+                                         @click="window.open(img, '_blank')" alt="Image">
+                                </template>
+                                <div x-show="item.images.length > 1" class="absolute inset-0 flex justify-between items-center px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button @click.stop="currentImgIdx = (currentImgIdx - 1 + item.images.length) % item.images.length" class="bg-black/50 text-white p-2 rounded-full hover:bg-black/70 w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                                    <button @click.stop="currentImgIdx = (currentImgIdx + 1) % item.images.length" class="bg-black/50 text-white p-2 rounded-full hover:bg-black/70 w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+                                </div>
+                            </div>
+                        </template>
+                        <template x-if="!item.images || item.images.length === 0">
+                            <div class="flex flex-col items-center justify-center text-gray-300 dark:text-gray-700">
+                                <i :class="item.icon_fallback" class="text-6xl mb-2 opacity-50"></i>
+                                <span class="text-xs">無圖片</span>
+                            </div>
+                        </template>
+                        <div class="absolute top-3 right-3">
+                             <span class="px-2 py-1 text-xs font-bold rounded shadow-sm" :class="getCategoryBadgeClass(item.category)" x-text="item.category"></span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white leading-tight" x-text="item.title"></h3>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <template x-for="(val, key) in item.tags" :key="key">
+                                <div class="inline-flex items-center px-2.5 py-1 rounded bg-gray-100 dark:bg-gray-800 text-xs text-gray-600 dark:text-slate-200 border border-slate-300 dark:border-slate-600">
+                                    <span class="opacity-70 mr-1" x-text="key + ':'"></span>
+                                    <span class="font-semibold" x-text="val"></span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div x-data="{ expanded: false }" class="mb-4 relative">
+                            <div class="prose dark:prose-invert text-sm text-slate-700 dark:text-slate-300 leading-relaxed transition-all duration-300"
+                                 :class="(expanded || (item.description && item.description.length <= 100)) ? '' : 'line-clamp-3'"
+                                 x-html="item.description"></div>
+                            <button x-show="item.description && item.description.length > 100" @click="expanded = !expanded" 
+                                    class="mt-1 text-xs font-bold text-strawberry-600 dark:text-strawberry-400 hover:underline flex items-center gap-1">
+                                <span x-text="expanded ? '收起內容' : '閱讀更多'"></span>
+                                <i class="fa-solid" :class="expanded ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                            </button>
+                        </div>
+
+                        <div class="mt-auto space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                            <template x-for="detail in item.details" :key="detail.label">
+                                <div class="flex items-start gap-3 text-sm">
+                                    <div class="min-w-[20px] pt-1 text-center text-gray-400"><i :class="detail.icon"></i></div>
+                                    <div>
+                                        <span class="text-xs font-bold text-gray-500 dark:text-gray-500 block" x-text="detail.label"></span>
+                                        <span class="text-gray-800 dark:text-gray-300" x-text="detail.value"></span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        
+                        <div x-show="item.sources && item.sources.length > 0" class="mt-4 pt-2">
+                             <div x-data="{ showSources: false }">
+                                <button @click="showSources = !showSources" class="text-xs text-gray-400 hover:text-strawberry-600 flex items-center gap-1 transition-colors">
+                                    <i class="fa-solid fa-link"></i>參考資料來源 (<span x-text="item.sources.length"></span>)
+                                </button>
+                                <div x-show="showSources" x-transition class="mt-2 pl-2 border-l-2 border-strawberry-200 space-y-1">
+                                    <template x-for="(source, idx) in item.sources" :key="idx">
+                                        <a :href="source" target="_blank" class="block text-xs text-blue-500 hover:underline truncate w-full" x-text="source"></a>
+                                    </template>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div x-show="filteredItems.length === 0" x-cloak class="text-center py-20">
+            <div class="inline-block p-6 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+                <i class="fa-solid fa-magnifying-glass text-4xl text-gray-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">沒有找到相關結果</h3>
+            <p class="text-gray-500">請嘗試調整搜尋關鍵字或放寬篩選範圍。</p>
+            <button @click="resetFilters()" class="mt-6 px-6 py-2 bg-strawberry-600 text-white rounded-full hover:bg-strawberry-700 transition">
+                重置所有篩選
+            </button>
+        </div>
+    </main>
+
+    <button @click="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-6 right-6 p-3 bg-strawberry-600 text-white rounded-full shadow-lg hover:bg-strawberry-700 transition-all z-50 opacity-80 hover:opacity-100 hover:scale-110"
+            x-show="showScrollTop" x-transition>
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <footer class="bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
+            <p>資料整理自政府開放資料及各大農業改良場公開資訊</p>
+            <p class="mt-2">&copy; 2025 草莓知識百科. By XPRAMT</p>
+        </div>
+    </footer>
+</body>
+</html>
