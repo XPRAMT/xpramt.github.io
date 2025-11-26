@@ -11,7 +11,7 @@
         "來源": "台灣"
       },
       "資料來源": [
-        "https://kmweb.moa.gov.tw/subject/subject.php?id=42073","https://pvr.afa.gov.tw/CaseSearch/VarietyRight",
+        "https://kmweb.moa.gov.tw/subject/subject.php?id=42073",
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/637852890731774683c35ff07bed4e4759ac563f06afa5a5f9"
       ],
       "img": ["https://kmwebsys.moa.gov.tw/files/subject_WS/42073/A02_1.jpg"]
@@ -72,7 +72,8 @@
       ],
       "img": ["https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC_0498.JPG",
       "https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC00123.JPG",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.jpg"]
+      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.jpg",
+      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.png"]
     },
     {
       "名稱": "台農1號",
@@ -88,7 +89,9 @@
       "https://kmweb.moa.gov.tw/theme_data.php?theme=news&sub_theme=variety&id=68526",
       "https://www.tari.gov.tw/df_ufiles/d/2-%E8%8D%89%E8%8E%93%E5%8F%B0%E8%BE%B21%E8%99%9F.pdf"],
       "img": ["https://www.tari.gov.tw/df_ufiles/b/%E8%8D%89%E8%8E%93%E5%8F%B0%E8%BE%B21%E8%99%9F%E7%94%B0%E9%96%93%E6%A0%BD%E5%9F%B9%E6%83%85%E5%BD%A2.jpg",
-      "https://www.tari.gov.tw/df_ufiles/b/%E5%8F%B0%E8%BE%B21%E8%99%9F%E6%9E%9C%E7%9A%AE%E6%B7%B1%E7%B4%85%E8%B1%94%E9%BA%97.JPG"]
+      "https://www.tari.gov.tw/df_ufiles/b/%E5%8F%B0%E8%BE%B21%E8%99%9F%E6%9E%9C%E7%9A%AE%E6%B7%B1%E7%B4%85%E8%B1%94%E9%BA%97.JPG",
+      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%8F%B0%E8%BE%B21%E8%99%9F-1.png",
+      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%8F%B0%E8%BE%B21%E8%99%9F-2.png"]
     },
     {
       "名稱": "天來一號 (蘋果草莓)",
@@ -153,22 +156,25 @@
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/637889808694803961d1c3f39dc1374081a6496b616cc0f4ce",
         "shopee.tw/product/999060951/27376531958"
       ],
-      "img": [""]
+      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E7%B2%89%E9%BB%9B-1.png",
+      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E7%B2%89%E9%BB%9B-2.png"]
     },
     {
       "名稱": "萬能2號 (四季粉鑽)",
-      "糖度": 0,
-      "育苗簡介": "蕭興德於2023年培育成功",
-      "外形外觀": "",
-      "口味口感": "",
+      "糖度": 14,
+      "育苗簡介": "蕭興德於2023年培育成功，在適宜條件下可全年開花結果",
+      "外形外觀": "外形整體呈現心形，帶有白色至淡粉色漸層。切開後的果肉呈白色",
+      "口味口感": "帶有糖果與哈密瓜香氣",
       "tag": {
         "顏色": "粉色",
         "來源": "台灣"
       },
       "資料來源": [
-        ""
+        "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/63809738215035008795f40fd142554ea7ab69935bedb19b32",
+        "shopee.tw/product/161600842/5554276891"
       ],
-      "img": [""]
+      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%9B%9B%E5%AD%A3%E7%B2%89%E9%91%BD-1.png",
+      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%9B%9B%E5%AD%A3%E7%B2%89%E9%91%BD-2.png"]
     },
     {
       "名稱": "香野",
