@@ -108,32 +108,34 @@
     },
     {
       "名稱": "明興3號 (黑鑽)",
-      "糖度": 0,
+      "糖度": 13,
       "育苗簡介": "深紅色澤、鑽石果型的黑鑽草莓（明興3號），是台灣莓苗教父許明興親自培育，於2019年發表的新品種",
       "外形外觀": "長度相對於寬度為中等長，單果重中-大，形狀呈錐形，顏色呈深紅色，種子位置低於表皮。",
       "口味口感": "香味濃郁，甜味鮮明、酸味較低",
       "tag": {
-        "顏色": "紅色",
+        "顏色": "深紅",
         "來源": "台灣"
       },
       "資料來源": [
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/63785289229067174218d60046d21e4db78ffecb7ed161ee7a",
-        "https://www.buydirectlyfromfarmers.tw/catalogue/Waipu_strawberry_Liu_5266/?utm_source=fb&utm_medium=post&utm_campaign=202301_%E6%97%AC%E5%91%B3_%E7%94%A2%E5%AD%A3%E6%98%8E%E6%98%9F_%E5%86%AC%E5%AD%A3%E5%BF%85%E5%90%83%E8%8D%89%E8%8E%93%E5%9C%96%E9%91%91_%E8%8D%89%E8%8E%93&utm_content=230128_%E7%89%B9%E8%89%B2_%E8%8D%89%E8%8E%93%E7%94%9F%E5%8A%9B%E8%BB%8D_%E7%84%A1%E8%BE%B2%E8%97%A5%E9%BB%91%E9%91%BD%E8%8D%89%E8%8E%93"
+        "https://www.buydirectlyfromfarmers.tw/catalogue/Waipu_strawberry_Liu_5266/",
+        "https://www.agriharvest.tw/archives/122588"
       ],
-      "img": []
+      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E9%BB%91%E9%91%BD%E8%8D%89%E8%8E%93.png"]
     },
     {
-      "名稱": "",
-      "糖度": 0,
-      "育苗簡介": "",
-      "外形外觀": "",
-      "口味口感": "",
+      "名稱": "明興5號 (優雪)",
+      "糖度": 13,
+      "育苗簡介": "優雪草莓（明興5號）是莓苗教父許明興先生耗時6年，在2020年以蘋果草莓、蜜香草莓雜交育成的新品種，豔紅的果色十分討喜。成熟的優雪草莓會散發甜蜜的糖果香氣，彷彿噴了天然香水一般；此外，優雪草莓的甜度也相當出眾，在日照充足的情況下，幾乎完全無酸味，從裡到外都是個甜姐兒！",
+      "外形外觀": "中等長，形狀呈錐形，顏色呈中紅色，種子位置低於表皮。",
+      "口味口感": "果肉緊實帶QQ口感，幾乎完全無酸味",
       "tag": {
         "顏色": "紅色",
         "來源": "台灣"
       },
       "資料來源": [
-        ""
+        "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/63785289225176541054bdd162a3cf42acbfc6fd2b52da495b",
+        "https://www.buydirectlyfromfarmers.tw/catalogue/Waipu_yuki_strawberry_Liu_6034/"
       ],
       "img": []
     },
