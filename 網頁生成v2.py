@@ -283,7 +283,7 @@ def generate_html(items):
                              }}
                         }});
                     }}
-                    return Array.from(tags).sort();
+                    return Array.from(tags).sort((a, b) => a.localeCompare(b, 'zh-TW', {{ collation: 'zhuyin' }}));
                 }},
 
                 getCount(catId) {{
