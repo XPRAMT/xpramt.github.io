@@ -14,7 +14,9 @@
         "https://kmweb.moa.gov.tw/subject/subject.php?id=42073",
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/637852890731774683c35ff07bed4e4759ac563f06afa5a5f9"
       ],
-      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E8%8B%97%E6%A0%971%E8%99%9F%20%E6%88%80%E9%A6%99.png"]
+      "img": [
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E8%8B%97%E6%A0%971%E8%99%9F%20%E6%88%80%E9%A6%99.png"
+      ]
     },
     {
       "名稱": "桃園一號 (豐香)",
@@ -26,8 +28,14 @@
         "顏色": "紅色",
         "來源": "台灣"
       },
-      "資料來源": ["https://kmweb.moa.gov.tw/subject/subject.php?id=12664","https://www.tydares.gov.tw/redirect_files.php?id=19400&file_name=JyOYpJffVTrzO37wRcWGPlusclUWGEqual9WGSlashsRW4e6QXD6lc9VWGSlash3dpP","https://www.tydares.gov.tw/redirect_files.php?id=19400&file_name=JyOYpJffVTrzO37wRcWGPlusclUWGEqual9WGSlashsRW4e6QXD6lc9VWGSlash3dpP"],
-      "img": ["https://kmwebsys.moa.gov.tw/files/subject_WS/12664/A02_1.jpg"]
+      "資料來源": [
+        "https://kmweb.moa.gov.tw/subject/subject.php?id=12664",
+        "https://www.tydares.gov.tw/redirect_files.php?id=19400&file_name=JyOYpJffVTrzO37wRcWGPlusclUWGEqual9WGSlashsRW4e6QXD6lc9VWGSlash3dpP",
+        "https://www.tydares.gov.tw/redirect_files.php?id=19400&file_name=JyOYpJffVTrzO37wRcWGPlusclUWGEqual9WGSlashsRW4e6QXD6lc9VWGSlash3dpP"
+      ],
+      "img": [
+        "https://kmwebsys.moa.gov.tw/files/subject_WS/12664/A02_1.jpg"
+      ]
     },
     {
       "名稱": "桃園二號 (艷紅)",
@@ -39,7 +47,10 @@
         "顏色": "紅色",
         "來源": "台灣"
       },
-      "資料來源": ["https://kmweb.moa.gov.tw/subject/subject.php?id=12664","https://www.tydares.gov.tw/redirect_files.php?id=19400&file_name=JyOYpJffVTrzO37wRcWGPlusclUWGEqual9WGSlashsRW4e6QXD6lc9VWGSlash3dpP"],
+      "資料來源": [
+        "https://kmweb.moa.gov.tw/subject/subject.php?id=12664",
+        "https://www.tydares.gov.tw/redirect_files.php?id=19400&file_name=JyOYpJffVTrzO37wRcWGPlusclUWGEqual9WGSlashsRW4e6QXD6lc9VWGSlash3dpP"
+      ],
       "img": []
     },
     {
@@ -52,7 +63,10 @@
         "顏色": "紅色",
         "來源": "台灣"
       },
-      "資料來源": ["https://www.airitilibrary.com/Article/Detail?DocID=02575523-199912-201403140007-201403140007-1-17","https://www.tydares.gov.tw/upload/tydares/files/web_structure/7366/1998%E8%8D%89%E8%8B%BA%E6%A1%833-%E4%BB%A3%E4%BB%A3%E7%9B%B8%E5%82%B3.pdf"],
+      "資料來源": [
+        "https://www.airitilibrary.com/Article/Detail?DocID=02575523-199912-201403140007-201403140007-1-17",
+        "https://www.tydares.gov.tw/upload/tydares/files/web_structure/7366/1998%E8%8D%89%E8%8B%BA%E6%A1%833-%E4%BB%A3%E4%BB%A3%E7%9B%B8%E5%82%B3.pdf"
+      ],
       "img": []
     },
     {
@@ -70,10 +84,12 @@
         "https://www.tydares.gov.tw/en/files/tydares/web_structure/9908/A01_1.pdf",
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/63785286659939730226397282a35142b18a0eaa60486df9f6"
       ],
-      "img": ["https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC_0498.JPG",
-      "https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC00123.JPG",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.jpg",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.png"]
+      "img": [
+        "https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC_0498.JPG",
+        "https://www.tydares.gov.tw/upload/tydares/images/news/4452/DSC00123.JPG",
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.jpg",
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E6%A1%83%E5%9C%924%E8%99%9F.png"
+      ]
     },
     {
       "名稱": "台農1號",
@@ -85,13 +101,17 @@
         "顏色": "紅色",
         "來源": "台灣"
       },
-      "資料來源": ["https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/637852894635537868d85b5e6f23b54ffcb9a12adc2c659198",
-      "https://kmweb.moa.gov.tw/theme_data.php?theme=news&sub_theme=variety&id=68526",
-      "https://www.tari.gov.tw/df_ufiles/d/2-%E8%8D%89%E8%8E%93%E5%8F%B0%E8%BE%B21%E8%99%9F.pdf"],
-      "img": ["https://www.tari.gov.tw/df_ufiles/b/%E8%8D%89%E8%8E%93%E5%8F%B0%E8%BE%B21%E8%99%9F%E7%94%B0%E9%96%93%E6%A0%BD%E5%9F%B9%E6%83%85%E5%BD%A2.jpg",
-      "https://www.tari.gov.tw/df_ufiles/b/%E5%8F%B0%E8%BE%B21%E8%99%9F%E6%9E%9C%E7%9A%AE%E6%B7%B1%E7%B4%85%E8%B1%94%E9%BA%97.JPG",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%8F%B0%E8%BE%B21%E8%99%9F-1.png",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%8F%B0%E8%BE%B21%E8%99%9F-2.png"]
+      "資料來源": [
+        "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/637852894635537868d85b5e6f23b54ffcb9a12adc2c659198",
+        "https://kmweb.moa.gov.tw/theme_data.php?theme=news&sub_theme=variety&id=68526",
+        "https://www.tari.gov.tw/df_ufiles/d/2-%E8%8D%89%E8%8E%93%E5%8F%B0%E8%BE%B21%E8%99%9F.pdf"
+      ],
+      "img": [
+        "https://www.tari.gov.tw/df_ufiles/b/%E8%8D%89%E8%8E%93%E5%8F%B0%E8%BE%B21%E8%99%9F%E7%94%B0%E9%96%93%E6%A0%BD%E5%9F%B9%E6%83%85%E5%BD%A2.jpg",
+        "https://www.tari.gov.tw/df_ufiles/b/%E5%8F%B0%E8%BE%B21%E8%99%9F%E6%9E%9C%E7%9A%AE%E6%B7%B1%E7%B4%85%E8%B1%94%E9%BA%97.JPG",
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%8F%B0%E8%BE%B21%E8%99%9F-1.png",
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%8F%B0%E8%BE%B21%E8%99%9F-2.png"
+      ]
     },
     {
       "名稱": "天來一號 (蘋果草莓)",
@@ -124,7 +144,9 @@
         "https://www.buydirectlyfromfarmers.tw/catalogue/Waipu_strawberry_Liu_5266/",
         "https://www.agriharvest.tw/archives/122588"
       ],
-      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E9%BB%91%E9%91%BD%E8%8D%89%E8%8E%93.png"]
+      "img": [
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E9%BB%91%E9%91%BD%E8%8D%89%E8%8E%93.png"
+      ]
     },
     {
       "名稱": "明興5號 (優雪)",
@@ -140,7 +162,9 @@
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/63785289225176541054bdd162a3cf42acbfc6fd2b52da495b",
         "https://www.buydirectlyfromfarmers.tw/catalogue/Waipu_yuki_strawberry_Liu_6034/"
       ],
-      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%84%AA%E9%9B%AA%E8%8D%89%E8%8E%93.png"]
+      "img": [
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%84%AA%E9%9B%AA%E8%8D%89%E8%8E%93.png"
+      ]
     },
     {
       "名稱": "萬能1號 (粉黛)",
@@ -156,8 +180,10 @@
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/637889808694803961d1c3f39dc1374081a6496b616cc0f4ce",
         "shopee.tw/product/999060951/27376531958"
       ],
-      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E7%B2%89%E9%BB%9B-1.png",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E7%B2%89%E9%BB%9B-2.png"]
+      "img": [
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E7%B2%89%E9%BB%9B-1.png",
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E7%B2%89%E9%BB%9B-2.png"
+      ]
     },
     {
       "名稱": "萬能2號 (四季粉鑽)",
@@ -173,29 +199,34 @@
         "https://pvr.afa.gov.tw/CaseSearch/VarietyRight/Preview/63809738215035008795f40fd142554ea7ab69935bedb19b32",
         "shopee.tw/product/161600842/5554276891"
       ],
-      "img": ["https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%9B%9B%E5%AD%A3%E7%B2%89%E9%91%BD-1.png",
-      "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%9B%9B%E5%AD%A3%E7%B2%89%E9%91%BD-2.png"]
+      "img": [
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%9B%9B%E5%AD%A3%E7%B2%89%E9%91%BD-1.png",
+        "https://raw.githubusercontent.com/XPRAMT/xpramt.github.io/refs/heads/main/img/%E5%9B%9B%E5%AD%A3%E7%B2%89%E9%91%BD-2.png"
+      ]
     },
     {
-      "名稱": "香野",
-      "糖度": 10.5,
-      "育苗簡介": "日本三重縣研發育成。具有生長勢強、早生、對炭疽病抗性強等特點。",
-      "外形外觀": "果形圓錐，果皮呈現亮麗的橙紅色",
-      "口味口感": "糖度約10-11度。果肉結實，酸度低甜度高，含有豐富的芳樟醇(Linalool)香氣，口感清脆。",
+      "名稱": "久能早生",
+      "糖度": 0,
+      "育苗簡介": "萩原章弘於靜岡縣靜岡市培育。由「旭寶」與「麗紅」雜交而成，專為石垣促成栽培開發之早生品種。1982年2月申請，1993年10月完成註冊。",
+      "外形外觀": "果實大，形狀呈長圓錐形，第一果與第二果形狀差異小。果皮顏色為鮮紅色，光澤度良好。無種子帶區域極少，瘦果凹陷程度中等。果肉顏色為橙赤色，中心空洞較小。萼片太小中等。",
+      "口味口感": "果實硬度較硬。可溶性固形物含量、酸度及香氣表現均為中等。屬於休眠期短、成熟期早的早生品種。",
       "tag": {
         "顏色": "紅色",
         "來源": "日本"
       },
       "資料來源": [
-        "https://www.kawacake.com/blog/posts/strawberry",
-        "https://www.letsgojp.com/archives/306064/"
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=457&LANGUAGE=Japanese"
       ],
-      "img": []
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/510/510_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/510/510_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/510/510_3_3.jpg"
+      ]
     },
     {
       "名稱": "章姬",
       "糖度": 13.5,
-      "育苗簡介": "章姬草莓由日本靜岡縣育種家原章弘於1985年以久能早生與女峰雜交培育而成，1992年完成品種註冊。",
+      "育苗簡介": "章姬草莓由日本靜岡縣育種家萩原章弘以久能早生與女峰雜交培育而成，1990年3月申請，1992年1月完成註冊。",
       "外形外觀": "果形細長圓錐狀，外表深紅，成熟後果肉呈粉白色",
       "口味口感": "糖度約12-15度。果肉細緻軟嫩，水分多，酸度極低，甜味明顯",
       "tag": {
@@ -203,119 +234,545 @@
         "來源": "日本"
       },
       "資料來源": [
-        "https://jw-webmagazine.com/zh-tw/日本草莓挑選指南，從產地品種到挑選竅門",
-        "https://www.agriharvest.tw/archives/122588",
-        "https://baike.baidu.com/item/章姬/730232"
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=2991&LANGUAGE=Japanese"
+      ],
+      "img": ["https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/3766/3766_3_1.jpg",
+              "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/3766/3766_3_2.jpg"]
+    },
+    {
+      "名稱": "とちおとめ (栃乙女)",
+      "糖度": 0,
+      "育苗簡介": "石原良行、高野邦治、植木正明、栃木博美。1994年6月申請，1996年11月完成註冊。由「久留米49號」與「栃の峰」雜交選育而成，為栃木縣開發之促成栽培品種。",
+      "外形外觀": "果實大，形狀呈圓錐形。果皮顏色為鮮紅色，光澤良好，果實表面的溝紋極少。果肉顏色為淡紅色，果心顏色為紅赤色。幾乎沒有無種子帶，瘦果凹陷程度中等。萼片大小中等。",
+      "口味口感": "果實硬度非常硬，可溶性固形物含量非常高，酸度中等。具備極佳的耐儲藏性（日持ち），屬於一季性品種，休眠期極短。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=5248&LANGUAGE=Japanese"
       ],
       "img": []
     },
     {
-      "名稱": "甘王",
-      "糖度": 11,
-      "育苗簡介": "日本福岡縣代表品種。名稱來自「紅(Akai)、圓(Marui)、大(Ookii)、好(Umai)」的首字縮寫。",
-      "外形外觀": "果實碩大，外型圓整渾厚，果皮深紅光亮",
-      "口味口感": "平均糖度11度以上。果肉紮實多汁，糖酸比平衡極佳，風味濃郁。",
+      "名稱": "さがほのか (佐賀穗香)",
+      "糖度": 0,
+      "育苗簡介": "田中政信、森欣也、中島壽龜、松尾孝則、田中龍臣、中村典義。1997年3月申請，2001年3月完成註冊。由佐賀縣於佐賀市育成，雜交自「大錦」與「豐之香」。",
+      "外形外觀": "果實大，形狀呈圓錐形。果皮顏色為鮮紅色，光澤良好，果實表面的溝紋較少。果肉與果心顏色均為純白色。幾乎沒有無種子帶，瘦果呈現中等程度的凹陷。萼片大小較大且肥厚。",
+      "口味口感": "果實硬度高，具有良好的脆度。可溶性固形物含量（糖度指標）高，酸度較低，香氣較濃。屬於一季性品種，成熟期較早。具備極佳的耐儲藏性。",
       "tag": {
         "顏色": "紅色",
-        "來源": "日本",
-        "特色": "大果"
+        "來源": "日本"
       },
       "資料來源": [
-        "https://greenbox.tw/Products/ItemDetail/64576"
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=8839&LANGUAGE=Japanese"
       ],
-      "img": []
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/9676/9676_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/10000/9676/9676_3_1.jpg"
+      ]
+    },
+    {
+      "名稱": "紅ほっぺ (紅頰)",
+      "糖度": 0,
+      "育苗簡介": "竹內隆、藤浪裕幸、河田智明、松村雅彦、大塚壽夫。1999年3月申請，2002年7月完成註冊。由靜岡縣於靜岡市育成，雜交自「章姬」與「幸之香」。",
+      "外形外觀": "果實形狀呈長圓錐形，體積相當大。果皮顏色為鮮紅色，光澤度良好。果肉顏色為鮮紅色，果心顏色為淡紅色。無種子帶極少，瘦果凹陷程度中等。萼片大小中等，相對於果徑而言萼片較大。",
+      "口味口感": "果實硬度較硬。可溶性固形物含量（糖度）高，酸度中等，具有濃郁的風味。屬於一季性品種，成熟期中等。具備較好的耐儲藏性。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=10371&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/20000/11652/11652_3_1.jpg"
+      ]
+    },
+    {
+      "名稱": "福岡S6号 (甘王 あまおう)",
+      "糖度": 0,
+      "育苗簡介": "三井壽一、小賦幸一、末吉孝行、伏原肇。2001年11月申請，2005年1月完成註冊。由「久留米53號」與培育者所有之系統雜交而成。",
+      "外形外觀": "果實形狀呈球圓錐形，體積相當大。果皮顏色為深紅色，光澤度良好。果肉顏色為淡紅色，果心顏色為淡赤色。幾乎沒有無種子帶，瘦果凹陷程度小。萼片大小相對於果徑為中等偏大。",
+      "口味口感": "果實硬度高，果實內部空洞無或小。可溶性固形物含量高，酸度中等，耐運輸性強。屬於一季性品種，成熟期較早。",
+      "tag": {
+        "顏色": "深紅",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=12572&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/20000/14023/14023_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/20000/14023/14023_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/20000/14023/14023_3_2.jpg"
+      ]
+    },
+    {
+      "名稱": "かおり野 (香野)",
+      "糖度": 0,
+      "育苗簡介": "森利樹、北村八祥 在三重縣於津市培育，2008年2月申請，2010年5月完成註冊。",
+      "外形外觀": "果實大，形狀呈圓錐形，縱橫比為縱長。果皮顏色為橙赤色，光澤感強。瘦果凹陷小。果肉顏色為橙赤色，果心顏色為白色，果實內部空洞為中等。萼片與果實連接處呈分離狀，大小相對於果徑較大。",
+      "口味口感": "果實硬度較硬。屬於一季性品種，成熟期較早，以具有獨特的清爽香氣與橙赤色果肉為特徵。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=19529&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_4_8.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_4_9.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/22218/22218_4_2.jpg"
+      ]
+    },
+    {
+      "名稱": "姫香",
+      "糖度": 0,
+      "育苗簡介": "上杉幸孝。2009年7月申請，2011年10月完成註冊。由培育者於愛媛縣西予市育成。",
+      "外形外觀": "果實體積相當大，形狀呈圓錐形，縱橫比為明顯的縱長型。果皮顏色為橙赤色，光澤度強。瘦果呈現凹陷狀態。萼片呈水平附著，大小相對於果徑較大。果肉顏色為橙赤色，果心顏色為淡赤色。",
+      "口味口感": "果實硬度極硬，果實內部無空洞或極小。屬於一季性品種。其特徵為極高的果實硬度與鮮豔的橙赤色外觀。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=21163&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_19.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_22.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_13.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23905/23905_4_16.jpg"
+      ]
     },
     {
       "名稱": "古都華",
-      "糖度": 13.5,
-      "育苗簡介": "日本奈良縣育成。以其如紅寶石般的深紅色澤與高雅風味聞名，產量較少。",
-      "外形外觀": "果皮呈現深紅色(亮澤感強)，果形整齊",
+      "糖度": 0,
+      "育苗簡介": "日本奈良縣育成，2009年7月申請，2011年10月完成註冊。以其如紅寶石般的深紅色澤與高雅風味聞名，葉面顏色為深綠，頂小葉的縱橫比為縱長，頂小葉的鋸齒形狀為中間，頂小葉的橫截面形狀為向上彎曲，葉柄的長度為極長，花的數量為少，花的直徑為稍大，花瓣的表面顏色為白，季性為一季結果。申請品種「古都華」與對照品種「アイストロ」相比較，頂小葉的縱橫比為縱長，可溶性固形物含量為極高等方面認可為區別性。與對照品種「さちのか」相比較，葉面的光澤強弱為中。",
+      "外形外觀": "果實稍小，果實較長，圓錐形，光澤強，果實的萼片與果實的附著方式為向上，果徑比萼片稍大，果實相當硬，果肉顏色橙紅，果心顏色為白，果實的空洞為無或小",
       "口味口感": "糖度約12-15度。糖度與酸度皆高，風味層次豐富濃厚，果肉紮實。",
       "tag": {
         "顏色": "紅色",
         "來源": "日本"
       },
       "資料來源": [
-        "https://www.harpersbazaar.com/tw/beauty/dietary-therapy/g62733136/japan-strawberry/"
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=21164&LANGUAGE=Japanese"
       ],
-      "img": []
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_13.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_16.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_19.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/23914/23914_4_22.jpg"
+      ]
     },
     {
-      "名稱": "おいC",
-      "糖度": 12.5,
-      "育苗簡介": "日本農研機構育成。主打高維生素C含量 (約一般草莓的1.3-1.6倍)。",
-      "外形外觀": "果實大，果皮深紅色，具有光澤",
-      "口味口感": "糖度約10-15度。果肉相當紮實，硬度高，耐儲運，甜度高帶適度酸味，有清新水果香氣。",
-      "tag": {
-        "顏色": "紅色",
-        "來源": "日本"
-      },
-      "資料來源": [
-        "https://www.letsgojp.cn/archives/306064/"
-      ],
-      "img": []
-    },
-    {
-      "名稱": "淡雪",
-      "糖度": 13.5,
-      "育苗簡介": "日本鹿兒島縣育成。著名的白草莓品種之一，因色澤如淡淡的雪而得名。",
-      "外形外觀": "果皮呈現淡粉紅色(櫻花粉)，種子紅色",
-      "口味口感": "糖度約12-15度。酸度極低，甜味清爽，帶有獨特的優雅香氣。",
+      "名稱": "桃薫",
+      "糖度": 0,
+      "育苗簡介": "國立研究開發法人農業・食品產業技術綜合研究機構，2009年11月申請，2011年10月完成註冊。培育者：野口裕司、森下昌三、室崇人、小島昭夫、坂田好輝、山田朋宏、杉山慶太。",
+      "外形外觀": "果實大，形狀呈圓錐形。果皮顏色為桃白色，光澤度中等。瘦果呈現凹陷狀態。果肉與果心顏色均為白色，萼片呈水平附著。",
+      "口味口感": "果實質地較軟，果實內部空洞為中等。該品種以具有獨特的桃子般香氣為主要特徵。",
       "tag": {
         "顏色": "粉紅",
         "來源": "日本"
       },
       "資料來源": [
-        "https://www.foodinjapan.org/zh/%E6%97%A5%E6%9C%AC/%E6%B7%A1%E9%9B%AA%E8%8D%89%E8%8E%93/"
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=21165&LANGUAGE=Japanese"
       ],
-      "img": []
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_19.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_22.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_24.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_1.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_4.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_7.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_10.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_11.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_12.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_13.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_14.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_17.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24290/24290_4_18.JPG"
+      ]
     },
     {
-      "名稱": "雪兔",
-      "糖度": 13.5,
-      "育苗簡介": "日本佐賀縣唐津市育成。屬於白草莓中的大果品種。",
-      "外形外觀": "果皮雪白，種子成熟時轉紅，外觀對比強烈",
-      "口味口感": "糖度約12-15度。果肉白色細緻，幾乎無酸味，帶有淡淡的奶香或水蜜桃/奇異果香。",
-      "tag": {
-        "顏色": "白色",
-        "來源": "日本"
-      },
-      "資料來源": [
-        "https://tw.bid.yahoo.com/item/101631068984",
-        "https://www.agriharvest.tw/archives/122588"
-      ],
-      "img": []
-    },
-    {
-      "名稱": "天使AE",
-      "糖度": 12,
-      "育苗簡介": "日本品種 (Angel Eight)。強調家庭園藝也能容易種植的白草莓品種。",
-      "外形外觀": "果實圓錐形，果皮乳白至微粉，種子紅色",
-      "口味口感": "糖度約11-13度。果肉白色，口感多汁細膩，甜度高酸度低，有香草/牛奶/哈密瓜香氣。",
-      "tag": {
-        "顏色": "白色",
-        "來源": "日本"
-      },
-      "資料來源": [
-        "https://www.strawberry31.com.tw/products_detail/71",
-        "https://www.agriharvest.tw/archives/122588"
-      ],
-      "img": []
-    },
-    {
-      "名稱": "白乙女",
+      "名稱": "おいCベリー",
       "糖度": 0,
-      "育苗簡介": "日本美好種苗(Miyoshi)育成。商品名為「白乙女」，亦有稱為「白雪姬」或相關系列。",
-      "外形外觀": "果實顏色偏白，帶有淡淡粉暈，果粒大",
-      "口味口感": "甜度高，香氣非常濃郁，具有類似水蜜桃的特殊風味與牛奶般的醇厚口感。",
+      "育苗簡介": "國立研究開發法人農業・食品產業技術綜合研究機構，2010年5月申請，2012年12月完成註冊。培育者：沖村誠、曽根一純、北谷恵美、木村貴志",
+      "外形外觀": "果實大，形狀呈圓錐形，果皮顏色為濃紅色且光澤感強。其瘦果具有突出的特性。果肉顏色與果心顏色均為紅色，萼片呈水平附著。",
+      "口味口感": "果實質地相當硬，果實內部空洞極小或無。",
+      "tag": {
+        "顏色": "深紅",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=22113&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24900/24900_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/24900/24900_3_1.jpg"
+      ]
+    },
+    {
+      "名稱": "淡雪",
+      "糖度": 0,
+      "育苗簡介": "山下徹於鹿兒島縣志布志市培育，2011年3月申請，2013年12月完成註冊。",
+      "外形外觀": "果實形狀呈圓錐形，縱橫比較長，果實大小較大。果皮顏色為獨特的淡橙色，光澤度中等。果肉顏色為橙赤色，果心顏色為淡赤色，果實空洞無或小。萼片呈水平附著，且相對於果徑較大。",
+      "口味口感": "果實硬度較硬",
+      "tag": {
+        "顏色": "粉紅",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=22821&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_5.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_6.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_8.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/25717/25717_4_9.jpg"
+      ]
+    },
+    {
+      "名稱": "真紅の美鈴",
+      "糖度": 0,
+      "育苗簡介": "成川昇。2011年10月申請，2015年2月完成註冊。由培育者於千葉縣大網白里市育成。",
+      "外形外觀": "果實大小中等，形狀呈圓錐形，縱橫比為縱長。果皮顏色為深紅色（濃赤），光澤強。瘦果位置與果皮齊平。萼片向上附著，大小相對於果徑較大。果肉與果心顏色均為紅色。",
+      "口味口感": "果實硬度高，果實內部空洞中等。屬於一季性品種。以其極深紅色的果皮與果肉為主要特徵，常被稱為「黑草莓」。",
+      "tag": {
+        "顏色": "深紅",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=23452&LANGUAGE=Japanese"
+      ],
+      "img": [
+        
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_15.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_16.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_18.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_3_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26416/26416_4_5.jpg"
+      ]
+    },
+    {
+      "名稱": "栃木i27号 (スカイベリー 天空)",
+      "糖度": 0,
+      "育苗簡介": "重野貴、直井昌彦、植木正明、家中達廣等13人。2011年11月申請，2014年11月完成註冊。由栃木縣於宇都宮市育成。",
+      "外形外觀": "果實體積非常大，形狀呈圓錐形，縱橫比為縱長。果皮顏色為橙赤色，光澤度中等。瘦果凹陷程度小。萼片呈水平附著，大小相對於果徑較大。果肉顏色為橙赤色，果心顏色為淡赤色。",
+      "口味口感": "果實硬度較硬，果實內部空洞無或小。屬於一季性品種，成熟期較晚。以極大的果實尺寸與美觀的圓錐形狀為主要特徵。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=23749&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_6.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_30.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26477/26477_4_5.jpg"
+      ]
+    },
+    {
+      "名稱": "雪うさぎ (雪兔)",
+      "糖度": 0,
+      "育苗簡介": "井手重夫、中原俊二於佐賀縣唐津市培育，2011年12月申請，2014年11月完成註冊。",
+      "外形外觀": "果實極大，形狀呈圓錐形，縱橫比同等。果皮顏色為桃白色，光澤感強。瘦果（種子）凹陷小。果肉與果心顏色均為白色。萼片向上附著，大小與果徑同等。",
+      "口味口感": "果實硬度中等，果實內部空洞為中等。屬於一季性品種，以白色外觀與極大的果實尺寸為主要特徵。",
       "tag": {
         "顏色": "白色",
         "來源": "日本"
       },
       "資料來源": [
-        "https://fresh-food.tochigipower.com/zh_TW/strawberry/"
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=23750&LANGUAGE=Japanese"
       ],
-      "img": []
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_6.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_5.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_22.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_23.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_24.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26589/26589_4_25.JPG"
+      ]
+    },
+    {
+      "名稱": "天使の実 (天使之實)",
+      "糖度": 0,
+      "育苗簡介": "井手重夫、中原俊二。2012年3月申請，2014年11月完成註冊。由培育者於佐賀縣唐津市育成。",
+      "外形外觀": "果實極大，形狀呈圓錐形，縱橫比同等。果皮顏色為淡橙色，光澤強。瘦果凹陷程度小。萼片向上附著，大小相對於果徑較小。果肉與果心顏色均為白色。",
+      "口味口感": "果實硬度較軟，果實內部無空洞或極小。屬於一季性品種。開花期與成熟期均屬於極晚期。以其巨大的白色果實與淡橙色果皮為主要特徵。",
+      "tag": {
+        "顏色": "白色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=23752&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_6.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_3_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_5.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_22.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/26800/26800_4_23.JPG"
+      ]
+    },
+    {
+      "名稱": "豊雪姫",
+      "糖度": 0,
+      "育苗簡介": "片岡園、由比進、本城正憲、岡本潔、森下昌三、矢野孝喜、濱野惠。2012年6月申請，2014年11月完成註冊。由國立研究開發法人農業・食品產業技術綜合研究機構 (NARO) 育成。",
+      "外形外觀": "果實體積相當大，形狀呈圓錐形，縱橫比為縱長。果皮顏色為紅色，光澤度強。瘦果呈現凹陷狀態且程度較小。萼片呈水平附著，大小相對於果徑較大。果肉顏色為橙赤色，果心顏色為淡赤色。",
+      "口味口感": "果實硬度中等，果實內部無空洞或極小。屬於一季性品種，成熟期相當晚。花瓣顏色呈現特殊的綠白色。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=23753&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_6.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_5.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_29.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_30.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_32.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_33.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/27084/27084_4_34.JPG"
+      ]
+    },
+    {
+      "名稱": "福姫",
+      "糖度": 0,
+      "育苗簡介": "坂上真俊、數馬俊晴。2013年12月申請，2017年2月完成註冊。由培育者於福井縣福井市育成。",
+      "外形外觀": "果實體積相當大，形狀呈圓錐形，縱橫比為縱長。果皮顏色為紅色，光澤度中等。瘦果呈現凹陷狀態且程度較小。萼片呈水平附著，大小與果徑同等。果肉顏色為橙赤色，果心顏色為淡赤色。",
+      "口味口感": "果實硬度中等，果實內部無空洞或極小。屬於一季性品種。其特徵在於較小的花朵直徑，以及果實萼片著生位置呈現陷切（陷沒）狀態。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=25656&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_8.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_5.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_6.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_18.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/28737/28737_4_19.JPG"
+      ]
+    },
+    {
+      "名稱": "熊本VS03 (ゆうべに 熊本紅)",
+      "糖度": 0,
+      "育苗簡介": "坂本豐房、森田敏雅、小野誠、三原順一、田尻一裕。2014年9月申請，2017年2月完成註冊。由熊本縣於熊本市育成。",
+      "外形外觀": "果實較大，形狀呈圓錐形，縱橫比為縱長。果皮顏色為赤色，光澤度強。瘦果凹陷程度小。萼片向上附著，大小與果徑同等。果肉顏色為橙赤色，果心顏色為淡赤色。",
+      "口味口感": "果實硬度高，果實內部空洞無或小。屬於一季性品種，開花期與成熟期較早。以其鮮紅的光澤與紮實的口感為特徵。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=25611&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/30000/29487/29487_4_7.jpg"
+      ]
+    },
+    {
+      "名稱": "ももいろほっぺ8号 (天使AE)",
+      "糖度": 0,
+      "育苗簡介": "由株式會社つのたんIP於愛知縣一宮市培育，2015年7月申請，2018年3月完成註冊。",
+      "外形外觀": "果實較大，形狀呈圓錐形，縱橫比同等。果皮顏色為桃白色，光澤度中等。瘦果（種子）凹陷小。果肉與果心顏色均為白色。萼片水平附著，大小相對於果徑較小。",
+      "口味口感": "果實硬度中等，果實內部空洞無或小。該品種屬於四季性品種，是少見的白色系四季草莓。",
+      "tag": {
+        "顏色": "白色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=26682&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_13.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_15.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_5.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_9.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_11.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30358/30358_4_17.jpg"
+      ]
+    },
+    {
+      "名稱": "佐賀i9号 (いちごさん 草莓小姐)",
+      "糖度": 0,
+      "育苗簡介": "岡和彥、中島壽龜、伊東寬史、西美友紀等10人。2016年2月申請，2018年8月完成註冊。由佐賀縣於佐賀市育成。",
+      "外形外觀": "果實相當大，形狀呈長卵圓形。果皮顏色為赤色，光澤度強。瘦果凹陷程度中等。萼片向上附著，且相對於果徑而言萼片較大。果肉顏色為橙赤色，果心顏色為淡赤色。",
+      "口味口感": "果實硬度高，果實內部空洞無或小。屬於一季性品種。以其優美的卵圓外形、鮮紅光澤及香甜多汁的風味為特徵。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=26987&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_16.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_19.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805-001_30805_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805-002_30805_3_2.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_23.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/30805/30805_4_13.jpg"
+      ]
+    },
+    {
+      "名稱": "栃木iW1号 (白乙女)",
+      "糖度": 0,
+      "育苗簡介": "中西達郎、鶴見理沙、大橋隆、石原良行 在栃木縣於宇都宮市培育，2018年1月申請，2024年6月完成註冊。",
+      "外形外觀": "果實大小為中至大，形狀呈楔形，縱橫比為中等偏長。果皮顏色為淡黃白色，光澤度中等。瘦果位置低於表面。萼片向外附著，大小比果徑略小。果肉與果心顏色均為白色。",
+      "口味口感": "果實硬度為中等至硬，果實內部無空洞。屬於非四季性品種，成熟期較早，以楔形果實與白色外觀為特徵。",
+      "tag": {
+        "顏色": "白色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=30256&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_19.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_22.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_3_1.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_3_2.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_3_3.JPG",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_13.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/32822/32822_4_29.jpg"
+      ]
+    },
+    {
+      "名稱": "古都姫",
+      "糖度": 0,
+      "育苗簡介": "大村佳伊人。2021年4月申請，2025年6月完成註冊。由培育者於奈良縣奈良市育成。",
+      "外形外觀": "果實大小中等，形狀呈卵圓形，縱橫比為縱長。果皮顏色為橙紅色，光澤度強。瘦果位置呈現突出狀態（飛び出す）。萼片向上附著。果肉顏色為橙紅色，果心顏色為白色。",
+      "口味口感": "果實質地硬至非常硬，果實內部無空洞。屬於一季性品種。與對照品種「古都華」相比，主要差異在於其卵圓形的果實形狀以及突出的瘦果位置。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=31020&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_19.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_22.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_4.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_7.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_10.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_13.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35377/35377_4_16.jpg"
+      ]
+    },
+    {
+      "名稱": "MA16-18-06 (ほしうらら 星光)",
+      "糖度": 0,
+      "育苗簡介": "野口裕司、片岡園、江澤祥太、谷村風泰。2021年5月申請，2025年6月完成註冊。由國立研究開發法人農業・食品產業技術綜合研究機構 (NARO) 與株式會社ミヨシ共同研發。",
+      "外形外觀": "果實大，形狀呈圓錐形，縱橫比為中等偏長。果皮顏色為中等紅色，光澤度強。瘦果位置與果皮表面持平。萼片向外附著。果肉與果心顏色均為淡紅色。",
+      "口味口感": "果實硬度為中等至硬，果實內部空洞中等。屬於一季性品種，開花期較早。與對照品種「香野」相比，其果肉顏色較淡且開花期更早。",
+      "tag": {
+        "顏色": "紅色",
+        "來源": "日本"
+      },
+      "資料來源": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/apCMM112.aspx?TOUROKU_NO=31023&LANGUAGE=Japanese"
+      ],
+      "img": [
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35446/35446_3_3.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35446/35446_3_1.jpg",
+        "https://www.hinshu2.maff.go.jp/vips/cmm/file_library/40000/35446/35446_3_2.jpg"
+      ]
     },
     {
       "名稱": "妙香7號",
@@ -328,9 +785,12 @@
         "來源": "中國"
       },
       "資料來源": [
-        "https://baike.baidu.com/item/%E5%A6%99%E9%A6%997%E8%99%9F/19519327","https://www.ymt.com/supply/63815839"
+        "https://baike.baidu.com/item/%E5%A6%99%E9%A6%997%E8%99%9F/19519327",
+        "https://www.ymt.com/supply/63815839"
       ],
-      "img": ["https://img.yimutian.com/sells/62fcef942d211f7102b0d24306540654-800-.jpeg"]
+      "img": [
+        "https://img.yimutian.com/sells/62fcef942d211f7102b0d24306540654-800-.jpeg"
+      ]
     }
   ]
 }
